@@ -15,17 +15,17 @@ public:
 
     DummyGTEAPI();
 
-    void execute_command(const std::string& command, RegisterState& state,
+    void execute_command(int32_t command, RegisterState& state,
                          int32_t sf = 0, int32_t mx = 0, int32_t v = 0,
                          int32_t cv = 0, int32_t lm = 0);
 
-    void register_command(const std::string& opcode, CommandFunc func);
-    void unregister_command(const std::string& opcode);
+    void register_command(int32_t opcode, CommandFunc func);
+    void unregister_command(int32_t opcode);
 
-    std::vector<std::string> get_supported_commands() const;
+    std::vector<int32_t> get_supported_commands() const;
 
 private:
-    std::map<std::string, CommandFunc> commands_;
+    std::map<int32_t, CommandFunc> commands_;
 
     void cmd_rtps(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
     void cmd_rtpt(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);

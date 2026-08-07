@@ -43,7 +43,8 @@ TestFile TestFramework::load_test_file(const std::string& filepath) {
         }
 
         tc.name = get_string(get_field(obj, "name"), "unnamed");
-        tc.command = get_string(get_field(obj, "command"), "00");
+        tc.command = static_cast<int32_t>(get_int_field(obj, "command", 0));
+        tc.fakeop = static_cast<int32_t>(get_int_field(obj, "fakeop", 0));
         tc.sf = get_int_field(obj, "sf", 0);
         tc.mx = get_int_field(obj, "mx", 0);
         tc.v = get_int_field(obj, "v", 0);
@@ -88,7 +89,7 @@ TestFile TestFramework::load_test_file(const std::string& filepath) {
 TestResult TestFramework::run_test(const TestCase& test, DummyGTEAPI& api) {
     TestResult result;
     result.test_name = test.name;
-    result.command = test.command;
+    result.command = static_cast<int32_t>(test.command);
     result.passed = true;
 
     RegisterState state = test.initial;
@@ -186,7 +187,7 @@ void TestFramework::print_detailed_report() const {
         }
 
         std::string status = result.passed ? "[PASS]" : "[FAIL]";
-        std::cout << "  " << status << " " << result.test_name << " (cmd: 0x" << result.command << ")\n";
+        std::cout << "  " << status << " " << result.test_name << " (cmd: 0x" << std::hex << std::setw(2) << std::setfill('0') << (result.command & 0xFF) << std::dec << ")\n";
 
         if (!result.passed && !result.mismatches.empty()) {
             for (const auto& kv : result.mismatches) {

@@ -28,7 +28,8 @@ struct RegisterState {
 
 struct TestCase {
     std::string name;
-    std::string command;
+    int32_t command;
+    int32_t fakeop;
     int32_t sf;
     int32_t mx;
     int32_t v;

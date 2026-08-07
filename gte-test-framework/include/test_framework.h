@@ -13,7 +13,7 @@ namespace gte {
 
 struct TestResult {
     std::string test_name;
-    std::string command;
+    int32_t command;
     std::string filename;
     bool passed;
     std::string failure_reason;

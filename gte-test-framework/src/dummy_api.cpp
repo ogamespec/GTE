@@ -6,44 +6,44 @@ namespace gte {
 
 DummyGTEAPI::DummyGTEAPI() {
     // Register all GTE commands with dummy (pass-through) implementations
-    register_command("01", [this](RegisterState& s) { cmd_rtps(s, 0, 0, 0, 0, 0); });
-    register_command("02", [this](RegisterState& s) { cmd_rtpt(s, 0, 0, 0, 0, 0); });
-    register_command("06", [this](RegisterState& s) { cmd_nclip(s, 0, 0, 0, 0, 0); });
-    register_command("0C", [this](RegisterState& s) { cmd_op(s, 0, 0, 0, 0, 0); });
-    register_command("0E", [this](RegisterState& s) { cmd_ncds(s, 0, 0, 0, 0, 0); });
-    register_command("10", [this](RegisterState& s) { cmd_dpcs(s, 0, 0, 0, 0, 0); });
-    register_command("11", [this](RegisterState& s) { cmd_intpl(s, 0, 0, 0, 0, 0); });
-    register_command("12", [this](RegisterState& s) { cmd_mvmva(s, 0, 0, 0, 0, 0); });
-    register_command("1B", [this](RegisterState& s) { cmd_nccs(s, 0, 0, 0, 0, 0); });
-    register_command("1E", [this](RegisterState& s) { cmd_ncs(s, 0, 0, 0, 0, 0); });
-    register_command("28", [this](RegisterState& s) { cmd_sqr(s, 0, 0, 0, 0, 0); });
-    register_command("29", [this](RegisterState& s) { cmd_dcpl(s, 0, 0, 0, 0, 0); });
-    register_command("2D", [this](RegisterState& s) { cmd_avsz3(s, 0, 0, 0, 0, 0); });
-    register_command("2E", [this](RegisterState& s) { cmd_avsz4(s, 0, 0, 0, 0, 0); });
-    register_command("3D", [this](RegisterState& s) { cmd_gpf(s, 0, 0, 0, 0, 0); });
-    register_command("3E", [this](RegisterState& s) { cmd_gpl(s, 0, 0, 0, 0, 0); });
+    register_command(0x01, [this](RegisterState& s) { cmd_rtps(s, 0, 0, 0, 0, 0); });
+    register_command(0x02, [this](RegisterState& s) { cmd_rtpt(s, 0, 0, 0, 0, 0); });
+    register_command(0x06, [this](RegisterState& s) { cmd_nclip(s, 0, 0, 0, 0, 0); });
+    register_command(0x0C, [this](RegisterState& s) { cmd_op(s, 0, 0, 0, 0, 0); });
+    register_command(0x0E, [this](RegisterState& s) { cmd_ncds(s, 0, 0, 0, 0, 0); });
+    register_command(0x10, [this](RegisterState& s) { cmd_dpcs(s, 0, 0, 0, 0, 0); });
+    register_command(0x11, [this](RegisterState& s) { cmd_intpl(s, 0, 0, 0, 0, 0); });
+    register_command(0x12, [this](RegisterState& s) { cmd_mvmva(s, 0, 0, 0, 0, 0); });
+    register_command(0x1B, [this](RegisterState& s) { cmd_nccs(s, 0, 0, 0, 0, 0); });
+    register_command(0x1E, [this](RegisterState& s) { cmd_ncs(s, 0, 0, 0, 0, 0); });
+    register_command(0x28, [this](RegisterState& s) { cmd_sqr(s, 0, 0, 0, 0, 0); });
+    register_command(0x29, [this](RegisterState& s) { cmd_dcpl(s, 0, 0, 0, 0, 0); });
+    register_command(0x2D, [this](RegisterState& s) { cmd_avsz3(s, 0, 0, 0, 0, 0); });
+    register_command(0x2E, [this](RegisterState& s) { cmd_avsz4(s, 0, 0, 0, 0, 0); });
+    register_command(0x3D, [this](RegisterState& s) { cmd_gpf(s, 0, 0, 0, 0, 0); });
+    register_command(0x3E, [this](RegisterState& s) { cmd_gpl(s, 0, 0, 0, 0, 0); });
 }
 
-void DummyGTEAPI::execute_command(const std::string& command, RegisterState& state,
+void DummyGTEAPI::execute_command(int32_t command, RegisterState& state,
                                    int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
     auto it = commands_.find(command);
     if (it == commands_.end()) {
-        std::cerr << "Warning: Unknown GTE command '" << command << "', skipping\n";
+        std::cerr << "Warning: Unknown GTE command 0x" << std::hex << command << std::dec << ", skipping\n";
         return;
     }
     it->second(state);
 }
 
-void DummyGTEAPI::register_command(const std::string& opcode, CommandFunc func) {
+void DummyGTEAPI::register_command(int32_t opcode, CommandFunc func) {
     commands_[opcode] = func;
 }
 
-void DummyGTEAPI::unregister_command(const std::string& opcode) {
+void DummyGTEAPI::unregister_command(int32_t opcode) {
     commands_.erase(opcode);
 }
 
-std::vector<std::string> DummyGTEAPI::get_supported_commands() const {
-    std::vector<std::string> cmds;
+std::vector<int32_t> DummyGTEAPI::get_supported_commands() const {
+    std::vector<int32_t> cmds;
     for (const auto& kv : commands_) {
         cmds.push_back(kv.first);
     }
