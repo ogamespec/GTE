@@ -174,12 +174,23 @@ with open('v1/rtps.json') as f:
     tests = json.load(f)
 
 for test in tests:
+    # Assemble GTE opcode from test properties
+    raw_opcode = (
+        ((test.get('fakeop', 0)) & 0x1F) << 20 |
+        ((test.get('sf', 0)) & 1) << 19 |
+        ((test.get('mx', 0)) & 3) << 17 |
+        ((test.get('v', 0)) & 3) << 15 |
+        ((test.get('cv', 0)) & 3) << 13 |
+        ((test.get('lm', 0)) & 1) << 10 |
+        (test['command'] & 0x3F)
+    )
+
     # Set GTE registers to initial state
     set_gte_state(test['initial'])
-    
-    # Execute the GTE command
-    execute_gte_command(test['command'])
-    
+
+    # Execute the GTE instruction
+    execute_gte_opcode(raw_opcode)
+
     # Compare current GTE state to expected final state
     assert get_gte_state() == test['final']
 ```
