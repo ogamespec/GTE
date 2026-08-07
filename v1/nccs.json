@@ -1,7 +1,12 @@
 [
   {
-    "name": "NCCS sf=0 - all zeros",
+    "name": "NCCS - all zeros",
     "command": "1B",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 0, "d1": 0,
       "d6": 0,
@@ -28,8 +33,13 @@
     }
   },
   {
-    "name": "NCCS sf=0 - unit normal with identity color matrix",
+    "name": "NCCS - unit normal with identity color matrix",
     "command": "1B",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d6": 1,
@@ -55,8 +65,13 @@
     }
   },
   {
-    "name": "NCCS sf=0 - negative normal",
+    "name": "NCCS - negative normal",
     "command": "1B",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": -4096, "d1": -4096,
       "d6": 1,

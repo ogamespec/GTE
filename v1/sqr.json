@@ -1,7 +1,12 @@
 [
   {
-    "name": "SQR sf=0 - all zeros",
+    "name": "SQR - all zeros",
     "command": "28",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 0, "d10": 0, "d11": 0,
@@ -15,8 +20,13 @@
     }
   },
   {
-    "name": "SQR sf=0 - positive values",
+    "name": "SQR - positive values",
     "command": "28",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 100, "d10": 200, "d11": 300,
@@ -30,8 +40,13 @@
     }
   },
   {
-    "name": "SQR sf=0 - negative values (result always positive)",
+    "name": "SQR - negative values (result always positive)",
     "command": "28",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": -100, "d10": -200, "d11": -300,
@@ -45,8 +60,13 @@
     }
   },
   {
-    "name": "SQR sf=0 - max positive 16-bit",
+    "name": "SQR - max positive 16-bit",
     "command": "28",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 32767, "d10": 32767, "d11": 32767,
@@ -60,8 +80,13 @@
     }
   },
   {
-    "name": "SQR sf=0 - max negative 16-bit",
+    "name": "SQR - max negative 16-bit",
     "command": "28",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": -32768, "d10": -32768, "d11": -32768,
@@ -75,8 +100,13 @@
     }
   },
   {
-    "name": "SQR sf=1 - with 12-bit fraction shift",
+    "name": "SQR - with 12-bit fraction shift",
     "command": "28",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 8192, "d10": 8192, "d11": 8192,
@@ -90,8 +120,13 @@
     }
   },
   {
-    "name": "SQR sf=0 - mixed signs",
+    "name": "SQR - mixed signs",
     "command": "28",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": -100, "d10": 200, "d11": -300,
@@ -105,8 +140,13 @@
     }
   },
   {
-    "name": "SQR sf=0 - one component zero",
+    "name": "SQR - one component zero",
     "command": "28",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 0, "d10": 0, "d11": 0,

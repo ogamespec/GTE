@@ -1,7 +1,12 @@
 [
   {
-    "name": "GPF sf=0, lm=0 - all zeros",
+    "name": "GPF - all zeros",
     "command": "3D",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 0, "d10": 0, "d11": 0,
@@ -15,8 +20,13 @@
     }
   },
   {
-    "name": "GPF sf=0 - IR0=1 multiply",
+    "name": "GPF - multiply",
     "command": "3D",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 4096,
       "d9": 100, "d10": 200, "d11": 300,
@@ -30,8 +40,13 @@
     }
   },
   {
-    "name": "GPF sf=1 - with 12-bit fraction shift",
+    "name": "GPF - with 12-bit fraction shift",
     "command": "3D",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 4096,
       "d9": 8192, "d10": 8192, "d11": 8192,
@@ -45,8 +60,13 @@
     }
   },
   {
-    "name": "GPF sf=0 - IR0=0 (result zero)",
+    "name": "GPF - (result zero)",
     "command": "3D",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 100, "d10": 200, "d11": 300,
@@ -60,8 +80,13 @@
     }
   },
   {
-    "name": "GPF sf=0 - negative IR values",
+    "name": "GPF - negative IR values",
     "command": "3D",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 4096,
       "d9": -100, "d10": -200, "d11": -300,
@@ -75,8 +100,13 @@
     }
   },
   {
-    "name": "GPF sf=0 - IR0=max positive",
+    "name": "GPF - IR0=max positive",
     "command": "3D",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 32767,
       "d9": 1, "d10": 1, "d11": 1,
@@ -90,8 +120,13 @@
     }
   },
   {
-    "name": "GPF sf=0 - mixed positive/negative IR0",
+    "name": "GPF - mixed positive/negative IR0",
     "command": "3D",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": -4096,
       "d9": 100, "d10": -200, "d11": 300,

@@ -1,7 +1,12 @@
 [
   {
-    "name": "DPCS sf=0 - all zeros",
+    "name": "DPCS - all zeros",
     "command": "10",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 0, "d10": 0, "d11": 0,
@@ -26,8 +31,13 @@
     }
   },
   {
-    "name": "DPCS sf=0 - with RGB from RGBC",
+    "name": "DPCS - with RGB from RGBC",
     "command": "10",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 0, "d10": 0, "d11": 0,
@@ -53,8 +63,13 @@
     }
   },
   {
-    "name": "DPCS sf=0 - with IR0 interpolation",
+    "name": "DPCS - with IR0 interpolation",
     "command": "10",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 16384,
       "d9": 0, "d10": 0, "d11": 0,

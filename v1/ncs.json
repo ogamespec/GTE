@@ -1,7 +1,12 @@
 [
   {
-    "name": "NCS sf=0 - all zeros",
+    "name": "NCS - all zeros",
     "command": "1E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 0, "d1": 0,
       "d6": 0,
@@ -28,8 +33,13 @@
     }
   },
   {
-    "name": "NCS sf=0 - unit normal with identity light",
+    "name": "NCS - unit normal with identity light",
     "command": "1E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d6": 1,
@@ -56,8 +66,13 @@
     }
   },
   {
-    "name": "NCS sf=0 - negative normal",
+    "name": "NCS - negative normal",
     "command": "1E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": -4096, "d1": -4096,
       "d6": 1,
@@ -84,8 +99,13 @@
     }
   },
   {
-    "name": "NCS sf=0 - zero light matrix",
+    "name": "NCS - zero light matrix",
     "command": "1E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d6": 1,
@@ -112,8 +132,13 @@
     }
   },
   {
-    "name": "NCS sf=1 - with fraction shift",
+    "name": "NCS - with fraction shift",
     "command": "1E",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 8192, "d1": 8192,
       "d6": 1,

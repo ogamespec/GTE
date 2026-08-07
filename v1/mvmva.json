@@ -1,7 +1,12 @@
 [
   {
-    "name": "MVMVA sf=0, mx=0 (RT), v=0 (V0), cv=0 (TR), lm=0",
+    "name": "MVMVA (RT), (V0), (TR),",
     "command": "12",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d8": 0,
@@ -25,8 +30,13 @@
     }
   },
   {
-    "name": "MVMVA sf=1, mx=0 (RT), v=0 (V0), cv=0 (TR), lm=0",
+    "name": "MVMVA (RT), (V0), (TR),",
     "command": "12",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 8192, "d1": 8192,
       "d8": 0,
@@ -50,8 +60,13 @@
     }
   },
   {
-    "name": "MVMVA sf=0, mx=1 (LLM), v=1 (V1), cv=1 (BK), lm=0",
+    "name": "MVMVA (LLM), (V1), (BK),",
     "command": "12",
+    "sf": 0,
+    "mx": 1,
+    "v": 1,
+    "cv": 1,
+    "lm": 0,
     "initial": {
       "d2": 4096, "d3": 4096,
       "d8": 0,
@@ -75,8 +90,13 @@
     }
   },
   {
-    "name": "MVMVA sf=0, mx=2 (LCM), v=2 (V2), cv=2 (FC), lm=0",
+    "name": "MVMVA (LCM), (V2), (FC),",
     "command": "12",
+    "sf": 0,
+    "mx": 2,
+    "v": 2,
+    "cv": 2,
+    "lm": 0,
     "initial": {
       "d4": 4096, "d5": 4096,
       "d8": 0,
@@ -100,8 +120,13 @@
     }
   },
   {
-    "name": "MVMVA sf=0, mx=0 (RT), v=3 (IR), cv=0 (TR), lm=0",
+    "name": "MVMVA (RT), (IR), (TR),",
     "command": "12",
+    "sf": 0,
+    "mx": 0,
+    "v": 3,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 4096, "d10": -4096, "d11": 0,
@@ -124,8 +149,13 @@
     }
   },
   {
-    "name": "MVMVA sf=0, mx=3 (garbage matrix), lm=0",
+    "name": "MVMVA (garbage matrix),",
     "command": "12",
+    "sf": 0,
+    "mx": 3,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d6": 128,
       "d8": 100,
@@ -149,8 +179,13 @@
     }
   },
   {
-    "name": "MVMVA sf=0, mx=0, v=0, cv=1 (BK), lm=0 - background color",
+    "name": "MVMVA (BK), - background color",
     "command": "12",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 1,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d8": 0,
@@ -174,8 +209,13 @@
     }
   },
   {
-    "name": "MVMVA sf=0, mx=0, v=0, cv=3 (None), lm=0",
+    "name": "MVMVA (None),",
     "command": "12",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 3,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d8": 0,
@@ -199,8 +239,13 @@
     }
   },
   {
-    "name": "MVMVA sf=0, overflow test - large values",
+    "name": "MVMVA overflow test - large values",
     "command": "12",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 32767, "d1": 32767,
       "d8": 0,
@@ -224,8 +269,13 @@
     }
   },
   {
-    "name": "MVMVA sf=0, negative values",
+    "name": "MVMVA negative values",
     "command": "12",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": -4096, "d1": -4096,
       "d8": 0,
@@ -249,8 +299,13 @@
     }
   },
   {
-    "name": "MVMVA sf=0, mixed rotation matrix",
+    "name": "MVMVA mixed rotation matrix",
     "command": "12",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 2048, "d1": -2048,
       "d8": 0,

@@ -1,7 +1,12 @@
 [
   {
-    "name": "RTPT sf=0 - all zeros",
+    "name": "RTPT - all zeros",
     "command": "02",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 0, "d1": 0,
       "d2": 0, "d3": 0,
@@ -31,8 +36,13 @@
     }
   },
   {
-    "name": "RTPT sf=0 - single vertex identity",
+    "name": "RTPT - single vertex identity",
     "command": "02",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d2": 0, "d3": 0,
@@ -62,8 +72,13 @@
     }
   },
   {
-    "name": "RTPT sf=1 - identity with translation",
+    "name": "RTPT - identity with translation",
     "command": "02",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 8192, "d1": 8192,
       "d2": 8192, "d3": 8192,
@@ -93,8 +108,13 @@
     }
   },
   {
-    "name": "RTPT sf=1 - near clip overflow on third vertex",
+    "name": "RTPT - near clip overflow on third vertex",
     "command": "02",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d2": 4096, "d3": 4096,
@@ -124,8 +144,13 @@
     }
   },
   {
-    "name": "RTPT sf=1 - DQA,DQB IR0 only on third vertex",
+    "name": "RTPT - DQA,DQB IR0 only on third vertex",
     "command": "02",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d2": 4096, "d3": 4096,

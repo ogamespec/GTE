@@ -1,7 +1,12 @@
 [
   {
-    "name": "GPL sf=0 - all zeros",
+    "name": "GPL - all zeros",
     "command": "3E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 0, "d10": 0, "d11": 0,
@@ -15,8 +20,13 @@
     }
   },
   {
-    "name": "GPL sf=0 - IR0=1 with base MAC=0",
+    "name": "GPL - with base",
     "command": "3E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 4096,
       "d9": 100, "d10": 200, "d11": 300,
@@ -30,8 +40,13 @@
     }
   },
   {
-    "name": "GPL sf=1 - with 12-bit shift (SHL then SAR cancels)",
+    "name": "GPL - with 12-bit shift (SHL then SAR cancels)",
     "command": "3E",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 4096,
       "d9": 8192, "d10": 8192, "d11": 8192,
@@ -45,8 +60,13 @@
     }
   },
   {
-    "name": "GPL sf=0 - IR0=0 (result = base MAC which is 0)",
+    "name": "GPL - (result = base MAC which is 0)",
     "command": "3E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 100, "d10": 200, "d11": 300,
@@ -60,8 +80,13 @@
     }
   },
   {
-    "name": "GPL sf=0 - negative IR values",
+    "name": "GPL - negative IR values",
     "command": "3E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 4096,
       "d9": -100, "d10": -200, "d11": -300,
@@ -75,8 +100,13 @@
     }
   },
   {
-    "name": "GPL sf=1 - potential 44-bit overflow check",
+    "name": "GPL - potential 44-bit overflow check",
     "command": "3E",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 8192,
       "d9": 32767, "d10": 32767, "d11": 32767,

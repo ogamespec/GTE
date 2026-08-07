@@ -1,7 +1,12 @@
 [
   {
-    "name": "OP sf=0 - cross product identity vectors",
+    "name": "OP - cross product identity vectors",
     "command": "0C",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 0, "d10": 0, "d11": 0,
@@ -16,8 +21,13 @@
     }
   },
   {
-    "name": "OP sf=0 - simple cross product",
+    "name": "OP - simple cross product",
     "command": "0C",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 1, "d10": 0, "d11": 0,
@@ -32,8 +42,13 @@
     }
   },
   {
-    "name": "OP sf=0 - zero vector input",
+    "name": "OP - zero vector input",
     "command": "0C",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 0, "d10": 0, "d11": 0,
@@ -48,8 +63,13 @@
     }
   },
   {
-    "name": "OP sf=0 - large values",
+    "name": "OP - large values",
     "command": "0C",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 32767, "d10": 32767, "d11": 32767,
@@ -64,8 +84,13 @@
     }
   },
   {
-    "name": "OP sf=0 - negative values",
+    "name": "OP - negative values",
     "command": "0C",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": -100, "d10": -200, "d11": -300,
@@ -80,8 +105,13 @@
     }
   },
   {
-    "name": "OP sf=1 - with fraction shift",
+    "name": "OP - with fraction shift",
     "command": "0C",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 4096, "d10": 4096, "d11": 4096,
@@ -96,8 +126,13 @@
     }
   },
   {
-    "name": "OP sf=0 - parallel vectors",
+    "name": "OP - parallel vectors",
     "command": "0C",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 100, "d10": 200, "d11": 300,

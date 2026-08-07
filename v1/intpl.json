@@ -1,7 +1,12 @@
 [
   {
-    "name": "INTPL sf=0 - all zeros",
+    "name": "INTPL - all zeros",
     "command": "11",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 0, "d10": 0, "d11": 0,
@@ -26,8 +31,13 @@
     }
   },
   {
-    "name": "INTPL sf=0 - with IR0=1",
+    "name": "INTPL - with",
     "command": "11",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 4096,
       "d9": 8192, "d10": 8192, "d11": 8192,
@@ -52,8 +62,13 @@
     }
   },
   {
-    "name": "INTPL sf=0 - with IR0=0 (returns FC)",
+    "name": "INTPL - with (returns FC)",
     "command": "11",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 0,
       "d9": 8192, "d10": 8192, "d11": 8192,
@@ -78,8 +93,13 @@
     }
   },
   {
-    "name": "INTPL sf=1 - with 12-bit shift",
+    "name": "INTPL - with 12-bit shift",
     "command": "11",
+    "sf": 1,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d8": 4096,
       "d9": 8192, "d10": 8192, "d11": 8192,

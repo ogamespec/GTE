@@ -1,7 +1,12 @@
 [
   {
-    "name": "NCDS sf=0 - all zeros",
+    "name": "NCDS - all zeros",
     "command": "0E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 0, "d1": 0,
       "d6": 0,
@@ -28,8 +33,13 @@
     }
   },
   {
-    "name": "NCDS sf=0 - with far color interpolation",
+    "name": "NCDS - with far color interpolation",
     "command": "0E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d6": 1,
@@ -56,8 +66,13 @@
     }
   },
   {
-    "name": "NCDS sf=0 - IR0=0 (no far color contribution)",
+    "name": "NCDS - (no far color contribution)",
     "command": "0E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d6": 1,
@@ -84,8 +99,13 @@
     }
   },
   {
-    "name": "NCDS sf=0 - IR0=max (full far color)",
+    "name": "NCDS - IR0=max (full far color)",
     "command": "0E",
+    "sf": 0,
+    "mx": 0,
+    "v": 0,
+    "cv": 0,
+    "lm": 0,
     "initial": {
       "d0": 4096, "d1": 4096,
       "d6": 1,
