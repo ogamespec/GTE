@@ -95,6 +95,30 @@ Values are decimal integers. Registers not relevant to a specific instruction ma
 | `intpl.json` | INTPL | Interpolation |
 | `dcpl.json` | DCPL | Depth Cue Color light |
 
+## Additional Test Parameters
+
+Each test case can include optional parameters to control test behavior. The default value for all parameters is `0` if omitted.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `sf` | 0 or 1 | Shift flag. When `sf=1`, the result is shifted right by 12 bits (12-bit fraction shift). Default: `0` |
+| `mx` | 0 or 1 | Matrix select. Selects which rotation matrix to use (RT11-RT33 or L11-L33). Default: `0` |
+| `v` | 0 or 1 | Vector select. Selects which input vector to use (VXY0/VZ0, VXY1/VZ1, or VXY2/VZ2). Default: `0` |
+| `cv` | 0 or 1 | Color select. Selects which color source to use (LR1-LB3 or RBK/GBK/BBK). Default: `0` |
+| `lm` | 0 or 1 | Light mode. When `lm=0`, uses signed saturation (0x8000/0x7FFF). When `lm=1`, uses unsigned saturation (0x0000/0xFFFF). Default: `0` |
+
+Example:
+
+```json
+{
+    "name": "test with sf=1",
+    "command": "GTE command opcode",
+    "sf": 1,
+    "initial": { ... },
+    "final": { ... }
+}
+```
+
 ## Edge Cases Covered
 
 Each instruction test file covers:
