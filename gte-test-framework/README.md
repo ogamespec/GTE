@@ -82,7 +82,7 @@ cd gte-test-framework
 
 ## Dummy GTE API
 
-The framework includes a Dummy GTE API with **stub implementations** for all 16 GTE commands.
+The framework includes a Dummy GTE API with **stub implementations** for all 22 GTE commands.
 
 These stubs are designed to be replaced by real GTE instruction implementations from emulators.
 
@@ -104,6 +104,12 @@ These stubs are designed to be replaced by real GTE instruction implementations 
 | 0x2E | AVSZ4 | Average Z for 4 vertices |
 | 0x3D | GPF | General Purpose Interpolation (flat) |
 | 0x3E | GPL | General Purpose Interpolation (smooth) |
+| 0x14 | CDP | Color Depth Que |
+| 0x16 | NCDT | Normal color depth cue (triple vectors) |
+| 0x1C | CC | Color Color |
+| 0x20 | NCT | Normal color (triple) |
+| 0x2A | DPCT | Depth Cueing (triple) |
+| 0x3F | NCCT | Normal Color Color (triple vector) |
 
 ### Using Real Implementations
 

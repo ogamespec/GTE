@@ -43,6 +43,12 @@ private:
     void cmd_dpcs(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
     void cmd_intpl(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
     void cmd_dcpl(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
+    void cmd_dpct(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
+    void cmd_nct(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
+    void cmd_ncdt(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
+    void cmd_ncct(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
+    void cmd_cdp(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
+    void cmd_cc(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
 };
 
 }

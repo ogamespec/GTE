@@ -22,6 +22,12 @@ DummyGTEAPI::DummyGTEAPI() {
     register_command(0x2E, [this](RegisterState& s) { cmd_avsz4(s, 0, 0, 0, 0, 0); });
     register_command(0x3D, [this](RegisterState& s) { cmd_gpf(s, 0, 0, 0, 0, 0); });
     register_command(0x3E, [this](RegisterState& s) { cmd_gpl(s, 0, 0, 0, 0, 0); });
+    register_command(0x14, [this](RegisterState& s) { cmd_cdp(s, 0, 0, 0, 0, 0); });
+    register_command(0x16, [this](RegisterState& s) { cmd_ncdt(s, 0, 0, 0, 0, 0); });
+    register_command(0x20, [this](RegisterState& s) { cmd_nct(s, 0, 0, 0, 0, 0); });
+    register_command(0x2A, [this](RegisterState& s) { cmd_dpct(s, 0, 0, 0, 0, 0); });
+    register_command(0x3F, [this](RegisterState& s) { cmd_ncct(s, 0, 0, 0, 0, 0); });
+    register_command(0x1C, [this](RegisterState& s) { cmd_cc(s, 0, 0, 0, 0, 0); });
 }
 
 void DummyGTEAPI::execute_command(int32_t command, RegisterState& state,
@@ -146,6 +152,42 @@ void DummyGTEAPI::cmd_intpl(RegisterState& state, int32_t sf, int32_t mx, int32_
 
 void DummyGTEAPI::cmd_dcpl(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
     // DCPL: Depth Cue Color Per light
+    // Dummy: no operation
+    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
+}
+
+void DummyGTEAPI::cmd_dpct(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+    // DPCT: Depth Cueing (triple)
+    // Dummy: no operation
+    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
+}
+
+void DummyGTEAPI::cmd_nct(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+    // NCT: Normal color (triple)
+    // Dummy: no operation
+    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
+}
+
+void DummyGTEAPI::cmd_ncdt(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+    // NCDT: Normal color depth cue (triple vectors)
+    // Dummy: no operation
+    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
+}
+
+void DummyGTEAPI::cmd_ncct(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+    // NCCT: Normal Color Color (triple vector)
+    // Dummy: no operation
+    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
+}
+
+void DummyGTEAPI::cmd_cdp(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+    // CDP: Color Depth Que
+    // Dummy: no operation
+    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
+}
+
+void DummyGTEAPI::cmd_cc(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+    // CC: Color Color
     // Dummy: no operation
     (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }

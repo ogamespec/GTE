@@ -94,6 +94,12 @@ Values are decimal integers. Registers not relevant to a specific instruction ma
 | `dpcs.json` | DPCS | Depth Cueing (single) |
 | `intpl.json` | INTPL | Interpolation |
 | `dcpl.json` | DCPL | Depth Cue Color light |
+| `dpct.json` | DPCT | Depth Cueing (triple) |
+| `nct.json` | NCT | Normal color (triple) |
+| `ncdt.json` | NCDT | Normal color depth cue (triple vectors) |
+| `ncct.json` | NCCT | Normal Color Color (triple vector) |
+| `cdp.json` | CDP | Color Depth Que |
+| `cc.json` | CC | Color Color |
 
 ## Additional Test Parameters
 
