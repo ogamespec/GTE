@@ -1,9 +1,7 @@
 #ifndef GTE_TEST_FRAMEWORK_H
 #define GTE_TEST_FRAMEWORK_H
 
-#include "json_parser.h"
-#include "gte_model.h"
-#include "dummy_api.h"
+#include "gte_stub.h"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -14,7 +12,7 @@ namespace gte {
 struct TestResult {
     std::string test_name;
     int32_t command;
-    int32_t raw_opcode;
+    uint32_t raw_opcode;
     std::string filename;
     bool passed;
     std::string failure_reason;

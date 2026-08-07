@@ -1,5 +1,5 @@
 #include "test_framework.h"
-#include "dummy_api.h"
+#include "gte_stub.h"
 #include <iostream>
 #include <string>
 #include <filesystem>
@@ -43,7 +43,6 @@ int main(int argc, char* argv[]) {
         } else if (arg == "-v" || arg == "--verbose") {
             verbose = true;
         } else {
-            // Treat as test directory if it exists
             if (fs::exists(arg) && fs::is_directory(arg)) {
                 test_dir = arg;
             } else {
@@ -81,6 +80,5 @@ int main(int argc, char* argv[]) {
         framework.print_detailed_report();
     }
 
-    // Return non-zero if any tests failed
     return framework.get_failed_count() > 0 ? 1 : 0;
 }

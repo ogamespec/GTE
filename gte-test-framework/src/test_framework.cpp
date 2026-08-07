@@ -1,4 +1,5 @@
 #include "test_framework.h"
+#include "json_parser.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -51,14 +52,14 @@ TestFile TestFramework::load_test_file(const std::string& filepath) {
         tc.cv = get_int_field(obj, "cv", 0);
         tc.lm = get_int_field(obj, "lm", 0);
 
-        // Get raw opcode from test data if present (pcsx-compatible format)
-        // When raw_opcode is provided, fields are extracted from it using pcsx decoding
-        // When raw_opcode is absent, assemble opcode from individual fields
+        // Get raw opcode from test data if present
+        // When raw_opcode is provided, use it directly
+        // When absent, assemble from test properties (command, fakeop, sf, mx, v, cv, lm)
         tc.raw_opcode = get_raw_opcode_field(obj, 0);
         if (tc.raw_opcode == 0) {
-            // Assemble opcode from individual fields (backward compatible)
-            tc.raw_opcode = GTEFields::assemble(tc.command, tc.sf, tc.mx,
-                                                tc.v, tc.cv, tc.lm, tc.fakeop);
+            tc.raw_opcode = static_cast<int32_t>(
+                assemble_gte_opcode(tc.command, tc.fakeop, tc.sf, tc.mx, tc.v, tc.cv, tc.lm)
+            );
         }
 
         auto initial_ptr = get_field(obj, "initial");
@@ -100,14 +101,14 @@ TestResult TestFramework::run_test(const TestCase& test, GTEStub& stub) {
     TestResult result;
     result.test_name = test.name;
     result.command = static_cast<int32_t>(test.command);
-    result.raw_opcode = test.raw_opcode;
+    result.raw_opcode = static_cast<uint32_t>(test.raw_opcode);
     result.passed = true;
 
     // Create CPU state from initial register state
     GTECPUState cpu_state(test.initial);
 
-    // Execute command via GTEStub - passes raw opcode for in-place decoding
-    stub.execute_command(test.raw_opcode, cpu_state);
+    // Execute command via GTEStub::gte_execute with assembled opcode
+    stub.gte_execute(static_cast<uint32_t>(test.raw_opcode), cpu_state);
 
     // Get actual state and compare with expected final state
     RegisterState actual_state = cpu_state.get_state();
@@ -125,24 +126,16 @@ bool TestFramework::compare_registers(const RegisterState& actual, const Registe
                                        std::map<std::string, std::pair<int32_t, int32_t>>& mismatches) {
     bool all_match = true;
 
-    // Check data registers - compare all registers that have expected values set
     for (int i = 0; i <= 31; ++i) {
         int32_t exp_val = expected.get_data(i);
         int32_t act_val = actual.get_data(i);
-        // Check if this register was specified in the test case (non-zero or explicitly zero)
-        // We compare all registers that are either non-zero or explicitly set in expected
-        if (exp_val != 0 || expected.get_data(i) != 0) {
-            // Only flag if expected is non-zero (existing behavior)
-            // For backward compatibility with test data that omits unchanged registers
-            if (exp_val != 0 && exp_val != act_val) {
-                std::string key = "d" + std::to_string(i);
-                mismatches[key] = {act_val, exp_val};
-                all_match = false;
-            }
+        if (exp_val != 0 && exp_val != act_val) {
+            std::string key = "d" + std::to_string(i);
+            mismatches[key] = {act_val, exp_val};
+            all_match = false;
         }
     }
 
-    // Check control registers
     for (int i = 0; i <= 31; ++i) {
         int32_t exp_val = expected.get_control(i);
         int32_t act_val = actual.get_control(i);

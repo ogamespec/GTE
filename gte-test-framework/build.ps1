@@ -45,7 +45,7 @@ if (-not (Test-Path "build")) {
 }
 
 Write-Host "Compiling..." -ForegroundColor Yellow
-& cl /std:c++17 /O2 /Iinclude /Fe:gte-runner.exe src\main.cpp src\json_parser.cpp src\gte_model.cpp src\dummy_api.cpp src\test_framework.cpp
+& cl /std:c++17 /O2 /Iinclude /Fe:gte-runner.exe src\main.cpp src\json_parser.cpp src\gte_model.cpp src\gte_stub.cpp src\test_framework.cpp
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host ""

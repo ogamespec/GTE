@@ -1,5 +1,5 @@
 #include "gte_model.h"
-#include "dummy_api.h"
+#include "gte_stub.h"
 #include <cstring>
 #include <climits>
 #include <cstdlib>
@@ -51,17 +51,18 @@ void RegisterState::set_control(int index, int32_t value) {
     }
 }
 
-void RegisterState::apply_to_cpu(CPUState& cpu) const {
+// CPUState interface implementation
+void apply_to_cpu(const RegisterState& state, CPUState& cpu) {
     for (int i = 0; i < 32; i++) {
-        cpu.set_data_d(i, data[i]);
-        cpu.set_control_d(i, control[i]);
+        cpu.set_data_d(i, state.data[i]);
+        cpu.set_control_d(i, state.control[i]);
     }
 }
 
-void RegisterState::load_from_cpu(const CPUState& cpu) {
+void load_from_cpu(RegisterState& state, const CPUState& cpu) {
     for (int i = 0; i < 32; i++) {
-        data[i] = cpu.get_data_d(i);
-        control[i] = cpu.get_control_d(i);
+        state.data[i] = cpu.get_data_d(i);
+        state.control[i] = cpu.get_control_d(i);
     }
 }
 
