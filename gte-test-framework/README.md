@@ -21,13 +21,13 @@ gte-test-framework/
 ├── include/
 │   ├── json_parser.h      - Lightweight JSON parser (no dependencies)
 │   ├── gte_model.h        - GTE register state model + CPUState interface
-│   ├── dummy_api.h        - GTEStub interface + GTECPUState implementation
+│   ├── gte_stub.h         - GTEStub interface + GTECPUState implementation
 │   └── test_framework.h   - Test runner and reporter
 └── src/
     ├── main.cpp           - Console application entry point
     ├── json_parser.cpp    - JSON parser implementation
     ├── gte_model.cpp      - Register state model + GTECPUState
-    ├── dummy_api.cpp      - GTEStub implementation + dummy commands
+    ├── gte_stub.cpp       - GTEStub implementation + dummy commands
     └── test_framework.cpp - Test loading and execution
 ```
 
@@ -160,9 +160,9 @@ gte::RegNames::FLAG   // d31 - Flags register
 // Control registers (CP2C)
 gte::RegNames::RT11   // c0 - Rotation matrix element
 gte::RegNames::TRX    // c9 - Translation X
-gte::RegNames::RBK    // c21 - Background color R
-gte::RegNames::RFC    // c32 - Far color R
-gte::RegNames::H      // c37 - Projection distance
+    gte::RegNames::RBK    // c15 - Background color R
+    gte::RegNames::RFC    // c21 - Far color R
+    gte::RegNames::H      // c26 - Projection distance
 ```
 
 ## Test File Format

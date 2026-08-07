@@ -1,6 +1,6 @@
 # GTE (Geometry Transform Engine) Test Suite
 
-Repository for JSMoo-based GTE JSON test files for the PlayStation Geometry Transform Engine.
+Repository for GTE JSON test files for the PlayStation Geometry Transform Engine.
 
 ## Overview
 
@@ -15,7 +15,7 @@ Each `.json` file contains an array of test cases. Each test case follows this s
 ```json
 {
     "name": "test description",
-    "command": "GTE command opcode",
+    "command": 1,
     "initial": {
         "d0": 0,
         "d1": 0,
@@ -67,8 +67,8 @@ Each `.json` file contains an array of test cases. Each test case follows this s
 | `c21-c23` | RFC, GFC, BFC | Far color |
 | `c24-c25` | OFX, OFY | Screen offset |
 | `c26` | H | Projection plane distance |
-| `c27` | DQA | Depth queing parameter A |
-| `c28` | DQB | Depth queing parameter B |
+| `c27` | DQA | Depth queuing parameter A |
+| `c28` | DQB | Depth queuing parameter B |
 | `c29-c30` | ZSF3, ZSF4 | Z scale factors |
 | `c31` | FLAG | Calculation error flags |
 
@@ -98,7 +98,7 @@ Values are decimal integers. Registers not relevant to a specific instruction ma
 | `nct.json` | NCT | Normal color (triple) |
 | `ncdt.json` | NCDT | Normal color depth cue (triple vectors) |
 | `ncct.json` | NCCT | Normal Color Color (triple vector) |
-| `cdp.json` | CDP | Color Depth Que |
+| `cdp.json` | CDP | Color Depth Queue |
 | `cc.json` | CC | Color Color |
 
 ## Additional Test Parameters
@@ -118,7 +118,7 @@ Example:
 ```json
 {
     "name": "test with sf=1",
-    "command": "GTE command opcode",
+    "command": 1,
     "sf": 1,
     "initial": { ... },
     "final": { ... }
