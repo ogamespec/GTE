@@ -1,7 +1,8 @@
 [
   {
     "name": "RTPS basic identity - all zeros",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -35,7 +36,8 @@
   },
   {
     "name": "RTPS - simple translation",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -68,7 +70,8 @@
   },
   {
     "name": "RTPS - identity matrix with translation",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -101,7 +104,8 @@
   },
   {
     "name": "RTPS - near clip plane overflow ()",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -134,7 +138,8 @@
   },
   {
     "name": "RTPS - behind camera (negative Z)",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -167,7 +172,8 @@
   },
   {
     "name": "RTPS - at exactly H/2 ()",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -200,7 +206,8 @@
   },
   {
     "name": "RTPS - just before overflow ()",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -233,7 +240,8 @@
   },
   {
     "name": "RTPs - large rotation matrix values",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -266,7 +274,8 @@
   },
   {
     "name": "RTPS - max positive 16-bit inputs",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -299,7 +308,8 @@
   },
   {
     "name": "RTPS - max negative 16-bit inputs",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -332,7 +342,8 @@
   },
   {
     "name": "RTPS - IR saturation lm=0 always (IR3 to -8000..7FFF)",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -365,7 +376,8 @@
   },
   {
     "name": "RTPS - IR saturation lm=1 (IR1,IR2 to 0..7FFF, IR3 no flag)",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -398,7 +410,8 @@
   },
   {
     "name": "RTPS - saturation lm=1 IR1,IR2 to 0..7FFF",
-    "command": "01",
+    "command": 1,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,

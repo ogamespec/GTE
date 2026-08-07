@@ -1,7 +1,8 @@
 [
   {
     "name": "GPL - all zeros",
-    "command": "3E",
+    "command": 62,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -21,7 +22,8 @@
   },
   {
     "name": "GPL - with base",
-    "command": "3E",
+    "command": 62,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -41,7 +43,8 @@
   },
   {
     "name": "GPL - with 12-bit shift (SHL then SAR cancels)",
-    "command": "3E",
+    "command": 62,
+    "fakeop": 3,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -61,7 +64,8 @@
   },
   {
     "name": "GPL - (result = base MAC which is 0)",
-    "command": "3E",
+    "command": 62,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -81,7 +85,8 @@
   },
   {
     "name": "GPL - negative IR values",
-    "command": "3E",
+    "command": 62,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -101,7 +106,8 @@
   },
   {
     "name": "GPL - potential 44-bit overflow check",
-    "command": "3E",
+    "command": 62,
+    "fakeop": 3,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -121,7 +127,8 @@
   },
   {
     "name": "GPL - saturation lm=1 (IR1,IR2 to 0..7FFF)",
-    "command": "3E",
+    "command": 62,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -141,7 +148,8 @@
   },
   {
     "name": "GPL - saturation lm=0 (IR1,IR2 to -8000..7FFF)",
-    "command": "3E",
+    "command": 62,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,

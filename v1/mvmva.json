@@ -1,7 +1,8 @@
 [
   {
     "name": "MVMVA (RT), (V0), (TR),",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -31,7 +32,8 @@
   },
   {
     "name": "MVMVA (RT), (V0), (TR),",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -61,7 +63,8 @@
   },
   {
     "name": "MVMVA (LLM), (V1), (BK),",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 1,
     "v": 1,
@@ -91,7 +94,8 @@
   },
   {
     "name": "MVMVA (LCM), (V2), (FC),",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 2,
     "v": 2,
@@ -121,7 +125,8 @@
   },
   {
     "name": "MVMVA (RT), (IR), (TR),",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 3,
@@ -150,7 +155,8 @@
   },
   {
     "name": "MVMVA (garbage matrix),",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 3,
     "v": 0,
@@ -180,7 +186,8 @@
   },
   {
     "name": "MVMVA (BK), - background color",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -210,7 +217,8 @@
   },
   {
     "name": "MVMVA (None),",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -240,7 +248,8 @@
   },
   {
     "name": "MVMVA overflow test - large values",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -270,7 +279,8 @@
   },
   {
     "name": "MVMVA negative values",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -300,7 +310,8 @@
   },
   {
     "name": "MVMVA mixed rotation matrix",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -330,7 +341,8 @@
   },
   {
     "name": "MVMVA - saturation lm=1 (IR1,IR2 to 0..7FFF)",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -360,7 +372,8 @@
   },
   {
     "name": "MVMVA - saturation lm=0 (IR1,IR2 to -8000..7FFF)",
-    "command": "12",
+    "command": 18,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,

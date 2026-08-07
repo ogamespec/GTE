@@ -1,7 +1,8 @@
 [
   {
     "name": "SQR - all zeros",
-    "command": "28",
+    "command": 40,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -21,7 +22,8 @@
   },
   {
     "name": "SQR - positive values",
-    "command": "28",
+    "command": 40,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -41,7 +43,8 @@
   },
   {
     "name": "SQR - negative values (result always positive)",
-    "command": "28",
+    "command": 40,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -61,7 +64,8 @@
   },
   {
     "name": "SQR - max positive 16-bit",
-    "command": "28",
+    "command": 40,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -81,7 +85,8 @@
   },
   {
     "name": "SQR - max negative 16-bit",
-    "command": "28",
+    "command": 40,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -101,7 +106,8 @@
   },
   {
     "name": "SQR - with 12-bit fraction shift",
-    "command": "28",
+    "command": 40,
+    "fakeop": 2,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -121,7 +127,8 @@
   },
   {
     "name": "SQR - mixed signs",
-    "command": "28",
+    "command": 40,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -141,7 +148,8 @@
   },
   {
     "name": "SQR - one component zero",
-    "command": "28",
+    "command": 40,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,

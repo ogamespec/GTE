@@ -1,7 +1,8 @@
 [
   {
     "name": "AVSZ4 - all zeros",
-    "command": "2E",
+    "command": 46,
+    "fakeop": 3,
     "initial": {
       "d7": 0,
       "d16": 0, "d17": 0, "d18": 0, "d19": 0,
@@ -16,7 +17,8 @@
   },
   {
     "name": "AVSZ4 - equal Z values with ZSF4=1",
-    "command": "2E",
+    "command": 46,
+    "fakeop": 3,
     "initial": {
       "d7": 0,
       "d16": 100, "d17": 100, "d18": 100, "d19": 100,
@@ -31,7 +33,8 @@
   },
   {
     "name": "AVSZ4 - max Z values",
-    "command": "2E",
+    "command": 46,
+    "fakeop": 3,
     "initial": {
       "d7": 0,
       "d16": 65535, "d17": 65535, "d18": 65535, "d19": 65535,
@@ -46,7 +49,8 @@
   },
   {
     "name": "AVSZ4 - ZSF4=N/40h for OT size 256",
-    "command": "2E",
+    "command": 46,
+    "fakeop": 3,
     "initial": {
       "d7": 0,
       "d16": 64, "d17": 64, "d18": 64, "d19": 64,
@@ -61,7 +65,8 @@
   },
   {
     "name": "AVSZ4 - single non-zero Z",
-    "command": "2E",
+    "command": 46,
+    "fakeop": 3,
     "initial": {
       "d7": 0,
       "d16": 0, "d17": 0, "d18": 0, "d19": 1024,
@@ -76,7 +81,8 @@
   },
   {
     "name": "AVSZ4 - negative ZSF4",
-    "command": "2E",
+    "command": 46,
+    "fakeop": 3,
     "initial": {
       "d7": 0,
       "d16": 100, "d17": 100, "d18": 100, "d19": 100,
@@ -91,7 +97,8 @@
   },
   {
     "name": "AVSZ4 - OTZ saturates to 0 for negative MAC0",
-    "command": "2E",
+    "command": 46,
+    "fakeop": 3,
     "initial": {
       "d7": 0,
       "d16": 100, "d17": 100, "d18": 100, "d19": 100,

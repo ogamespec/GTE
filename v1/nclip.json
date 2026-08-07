@@ -1,7 +1,8 @@
 [
   {
     "name": "NCLIP - all zeros",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": 0, "d13": 0, "d14": 0,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,
@@ -14,7 +15,8 @@
   },
   {
     "name": "NCLIP - clockwise triangle",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": 0, "d13": 100, "d14": 100,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,
@@ -27,7 +29,8 @@
   },
   {
     "name": "NCLIP - counter-clockwise triangle",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": 0, "d13": 100, "d14": 100,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,
@@ -40,7 +43,8 @@
   },
   {
     "name": "NCLIP - collinear points (result=0)",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": 0, "d13": 0, "d14": 100,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,
@@ -53,7 +57,8 @@
   },
   {
     "name": "NCLIP - large values near 32-bit overflow",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": 32767, "d13": 32767, "d14": 32767,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,
@@ -66,7 +71,8 @@
   },
   {
     "name": "NCLIP - mixed signs",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": -100, "d13": 100, "d14": -100,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,
@@ -79,7 +85,8 @@
   },
   {
     "name": "NCLIP - symmetric triangle",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": -50, "d13": 0, "d14": 50,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,
@@ -92,7 +99,8 @@
   },
   {
     "name": "NCLIP - all same X",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": 100, "d13": 100, "d14": 100,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,
@@ -105,7 +113,8 @@
   },
   {
     "name": "NCLIP - all same Y",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": 0, "d13": 100, "d14": 200,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,
@@ -118,7 +127,8 @@
   },
   {
     "name": "NCLIP - negative coordinates",
-    "command": "06",
+    "command": 6,
+    "fakeop": 3,
     "initial": {
       "d12": -100, "d13": -100, "d14": -100,
       "d24": 0, "d25": 0, "d26": 0, "d27": 0,

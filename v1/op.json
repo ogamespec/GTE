@@ -1,7 +1,8 @@
 [
   {
     "name": "OP - cross product identity vectors",
-    "command": "0C",
+    "command": 12,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -22,7 +23,8 @@
   },
   {
     "name": "OP - simple cross product",
-    "command": "0C",
+    "command": 12,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -43,7 +45,8 @@
   },
   {
     "name": "OP - zero vector input",
-    "command": "0C",
+    "command": 12,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -64,7 +67,8 @@
   },
   {
     "name": "OP - large values",
-    "command": "0C",
+    "command": 12,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -85,7 +89,8 @@
   },
   {
     "name": "OP - negative values",
-    "command": "0C",
+    "command": 12,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -106,7 +111,8 @@
   },
   {
     "name": "OP - with fraction shift",
-    "command": "0C",
+    "command": 12,
+    "fakeop": 3,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -127,7 +133,8 @@
   },
   {
     "name": "OP - parallel vectors",
-    "command": "0C",
+    "command": 12,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,

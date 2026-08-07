@@ -1,7 +1,8 @@
 [
   {
     "name": "GPF - all zeros",
-    "command": "3D",
+    "command": 61,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -21,7 +22,8 @@
   },
   {
     "name": "GPF - multiply",
-    "command": "3D",
+    "command": 61,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -41,7 +43,8 @@
   },
   {
     "name": "GPF - with 12-bit fraction shift",
-    "command": "3D",
+    "command": 61,
+    "fakeop": 3,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -61,7 +64,8 @@
   },
   {
     "name": "GPF - (result zero)",
-    "command": "3D",
+    "command": 61,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -81,7 +85,8 @@
   },
   {
     "name": "GPF - negative IR values",
-    "command": "3D",
+    "command": 61,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -101,7 +106,8 @@
   },
   {
     "name": "GPF - IR0=max positive",
-    "command": "3D",
+    "command": 61,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -121,7 +127,8 @@
   },
   {
     "name": "GPF - mixed positive/negative IR0",
-    "command": "3D",
+    "command": 61,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -141,7 +148,8 @@
   },
   {
     "name": "GPF - saturation lm=1 (IR1,IR2 to 0..7FFF)",
-    "command": "3D",
+    "command": 61,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -161,7 +169,8 @@
   },
   {
     "name": "GPF - saturation lm=0 (IR1,IR2 to -8000..7FFF)",
-    "command": "3D",
+    "command": 61,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,

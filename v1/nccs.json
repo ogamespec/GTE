@@ -1,7 +1,8 @@
 [
   {
     "name": "NCCS - all zeros",
-    "command": "1B",
+    "command": 27,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -34,7 +35,8 @@
   },
   {
     "name": "NCCS - unit normal with identity color matrix",
-    "command": "1B",
+    "command": 27,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -66,7 +68,8 @@
   },
   {
     "name": "NCCS - negative normal",
-    "command": "1B",
+    "command": 27,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -98,7 +101,8 @@
   },
   {
     "name": "NCCS - saturation lm=1 (IR1,IR2 to 0..7FFF)",
-    "command": "1B",
+    "command": 27,
+    "fakeop": 3,
     "sf": 0,
     "mx": 0,
     "v": 0,

@@ -1,7 +1,8 @@
 [
   {
     "name": "RTPT - all zeros",
-    "command": "02",
+    "command": 2,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -37,7 +38,8 @@
   },
   {
     "name": "RTPT - single vertex identity",
-    "command": "02",
+    "command": 2,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -73,7 +75,8 @@
   },
   {
     "name": "RTPT - identity with translation",
-    "command": "02",
+    "command": 2,
+    "fakeop": 2,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -109,7 +112,8 @@
   },
   {
     "name": "RTPT - near clip overflow on third vertex",
-    "command": "02",
+    "command": 2,
+    "fakeop": 2,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -145,7 +149,8 @@
   },
   {
     "name": "RTPT - DQA,DQB IR0 only on third vertex",
-    "command": "02",
+    "command": 2,
+    "fakeop": 2,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -181,7 +186,8 @@
   },
   {
     "name": "RTPT - near clip overflow lm=1 on third vertex",
-    "command": "02",
+    "command": 2,
+    "fakeop": 2,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -217,7 +223,8 @@
   },
   {
     "name": "RTPT - saturation lm=1 IR1,IR2 to 0..7FFF",
-    "command": "02",
+    "command": 2,
+    "fakeop": 2,
     "sf": 0,
     "mx": 0,
     "v": 0,
