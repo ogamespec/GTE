@@ -14,6 +14,7 @@ namespace gte {
 struct TestResult {
     std::string test_name;
     int32_t command;
+    int32_t raw_opcode;
     std::string filename;
     bool passed;
     std::string failure_reason;
@@ -25,9 +26,9 @@ public:
     TestFramework();
 
     TestFile load_test_file(const std::string& filepath);
-    TestResult run_test(const TestCase& test, DummyGTEAPI& api);
-    void run_test_file(const std::string& filepath, DummyGTEAPI& api);
-    void run_all_tests(const std::string& test_dir, DummyGTEAPI& api);
+    TestResult run_test(const TestCase& test, GTEStub& stub);
+    void run_test_file(const std::string& filepath, GTEStub& stub);
+    void run_all_tests(const std::string& test_dir, GTEStub& stub);
 
     void print_summary() const;
     void print_detailed_report() const;

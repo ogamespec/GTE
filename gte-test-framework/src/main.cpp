@@ -56,22 +56,23 @@ int main(int argc, char* argv[]) {
     std::cout << "==========================\n\n";
     std::cout << "Test directory: " << test_dir << "\n";
 
-    // Create Dummy GTE API
-    gte::DummyGTEAPI api;
+    // Create GTEStub with dummy implementations
+    gte::GTEStub stub;
+    gte::register_dummy_commands(stub);
 
     // Get supported commands
-    auto commands = api.get_supported_commands();
+    auto commands = stub.get_supported_commands();
     std::cout << "Registered commands: " << commands.size() << "\n";
     if (verbose) {
         for (const auto& cmd : commands) {
-            std::cout << "  - 0x" << cmd << "\n";
+            std::cout << "  - 0x" << std::hex << std::setw(2) << std::setfill('0') << cmd << std::dec << "\n";
         }
     }
 
     // Run tests
     std::cout << "\nRunning tests...\n\n";
     gte::TestFramework framework;
-    framework.run_all_tests(test_dir, api);
+    framework.run_all_tests(test_dir, stub);
 
     // Print results
     framework.print_summary();

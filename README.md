@@ -125,6 +125,32 @@ Example:
 }
 ```
 
+## GTE Test Framework
+
+The `gte-test-framework/` directory contains a C++ console application for running these tests against GTE implementations.
+
+### Building
+
+```bash
+cd gte-test-framework
+make        # Unix/Linux/Mac
+.\build.ps1 # Windows (MSVC)
+```
+
+### Running
+
+```bash
+./gte-runner ../v1       # Run all tests
+./gte-runner ../v1 -s    # Summary only
+./gte-runner ../v1 -v    # Verbose output
+```
+
+See `gte-test-framework/README.md` for detailed documentation on:
+- GTEStub interface for emulator porting
+- CPUState interface for register access
+- GTE instruction field decoding (pcsx-compatible)
+- Register name constants
+
 ## Edge Cases Covered
 
 Each instruction test file covers:

@@ -268,4 +268,21 @@ int64_t get_int_field(const JsonObject& obj, const std::string& field, int64_t d
     return default_val;
 }
 
+// Get raw GTE opcode field from test case JSON
+// Supports both decimal and hex string values
+// Example values: 1073742209 (decimal) or "0x40010001" (hex string)
+int32_t get_raw_opcode_field(const JsonObject& obj, int32_t default_val) {
+    auto it = obj.find("raw_opcode");
+    if (it != obj.end() && it->second) {
+        if (it->second->type == JsonValue::INTEGER) {
+            return static_cast<int32_t>(it->second->int_val);
+        }
+        if (it->second->type == JsonValue::STRING) {
+            char* end;
+            return static_cast<int32_t>(std::strtol(it->second->str_val.c_str(), &end, 0));
+        }
+    }
+    return default_val;
+}
+
 }

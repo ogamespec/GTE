@@ -6,7 +6,7 @@ Console application for testing GTE (Geometry Transform Engine) implementations 
 
 GTE-Runner is a C++ testing framework that:
 - Loads GTE test cases from JSON files
-- Executes them against a Dummy GTE API (stub implementations)
+- Executes them against a GTEStub (portable GTE command interface)
 - Compares actual register states with expected final states
 - Reports pass/fail results with detailed mismatch information
 
@@ -16,19 +16,18 @@ GTE-Runner is a C++ testing framework that:
 gte-test-framework/
 ├── Makefile
 ├── build.ps1
-├── build.bat
 ├── run.bat
 ├── README.md
 ├── include/
 │   ├── json_parser.h      - Lightweight JSON parser (no dependencies)
-│   ├── gte_model.h        - GTE register state model
-│   ├── dummy_api.h        - Dummy GTE API interface
+│   ├── gte_model.h        - GTE register state model + CPUState interface
+│   ├── dummy_api.h        - GTEStub interface + GTECPUState implementation
 │   └── test_framework.h   - Test runner and reporter
 └── src/
     ├── main.cpp           - Console application entry point
     ├── json_parser.cpp    - JSON parser implementation
-    ├── gte_model.cpp      - Register state model
-    ├── dummy_api.cpp      - Dummy GTE command stubs
+    ├── gte_model.cpp      - Register state model + GTECPUState
+    ├── dummy_api.cpp      - GTEStub implementation + dummy commands
     └── test_framework.cpp - Test loading and execution
 ```
 
@@ -80,56 +79,90 @@ cd gte-test-framework
 | `-s, --summary` | Show only summary, skip detailed report |
 | `-v, --verbose` | Enable verbose output |
 
-## Dummy GTE API
+## GTEStub Interface
 
-The framework includes a Dummy GTE API with **stub implementations** for all 22 GTE commands.
+GTEStub is the portable interface for GTE implementation in PSX emulators.
 
-These stubs are designed to be replaced by real GTE instruction implementations from emulators.
+### Design Principles
 
-| Opcode | Command | Description |
-|--------|---------|-------------|
-| 0x01 | RTPS | Round Perspective Transformation (single) |
-| 0x02 | RTPT | Round Perspective Transformation (triple) |
-| 0x06 | NCLIP | Normal Clipping |
-| 0x0C | OP | Outer Product |
-| 0x0E | NCDS | Normal Color Depth Cue Single |
-| 0x10 | DPCS | Depth Cue Color Single |
-| 0x11 | INTPL | Interpolation |
-| 0x12 | MVMVA | Matrix Vector Multiply with Add |
-| 0x1B | NCCS | Normal Color Color Single |
-| 0x1E | NCS | Normal Color Single |
-| 0x28 | SQR | Square of Vector |
-| 0x29 | DCPL | Depth Cue Color Per light |
-| 0x2D | AVSZ3 | Average Z for 3 vertices |
-| 0x2E | AVSZ4 | Average Z for 4 vertices |
-| 0x3D | GPF | General Purpose Interpolation (flat) |
-| 0x3E | GPL | General Purpose Interpolation (smooth) |
-| 0x14 | CDP | Color Depth Que |
-| 0x16 | NCDT | Normal color depth cue (triple vectors) |
-| 0x1C | CC | Color Color |
-| 0x20 | NCT | Normal color (triple) |
-| 0x2A | DPCT | Depth Cueing (triple) |
-| 0x3F | NCCT | Normal Color Color (triple vector) |
+1. **Raw 32-bit opcode**: Accepts the raw GTE opcode (bits 24-0 of COP2 instruction)
+2. **In-place field decoding**: Fields (sf, mx, v, cv, lm) are decoded from the opcode using pcsx-compatible bit masks
+3. **CPUState interface**: Provides emulator-agnostic register access (CP2D/CP2C)
+4. **Easy porting**: Implement CPUState and register command functions
 
-### Using Real Implementations
-
-Replace the dummy command implementations with real GTE instruction logic:
+### Porting to an Emulator
 
 ```cpp
-// In dummy_api.cpp, replace the stub:
-void DummyGTEAPI::cmd_rtps(RegisterState& state, ...) {
-    // Implement actual RTPS instruction
-    // Read input registers, compute result, write output registers
-}
+// 1. Implement CPUState to wrap your emulator's CP2D/CP2C registers
+class MyGTECPUState : public gte::CPUState {
+public:
+    int32_t get_data_d(int n) override {
+        return psxRegs.CP2D.p[n].d;  // Your emulator's data register
+    }
+    void set_data_d(int n, int32_t value) override {
+        psxRegs.CP2D.p[n].d = value;
+    }
+    int32_t get_control_d(int n) override {
+        return psxRegs.CP2C.p[n].d;  // Your emulator's control register
+    }
+    void set_control_d(int n, int32_t value) override {
+        psxRegs.CP2C.p[n].d = value;
+    }
+    int32_t get_data_raw(int n) override { return get_data_d(n); }
+    void set_data_raw(int n, int32_t value) override { set_data_d(n, value); }
+    int32_t get_control_raw(int n) override { return get_control_d(n); }
+    void set_control_raw(int n, int32_t value) override { set_control_d(n, value); }
+};
+
+// 2. Create GTEStub and register command implementations
+gte::GTEStub stub;
+
+stub.register_command(0x01, [](int32_t opcode, gte::CPUState& cpu) {
+    // RTPS implementation
+    auto fields = gte::GTEFields::decode(opcode);
+    int sf = fields.sf;  // Shift fraction flag
+    // Access registers via cpu.get_data_d(), cpu.get_control_d(), etc.
+    // ... implement RTPS logic ...
+});
+
+// 3. Execute GTE instructions
+MyGTECPUState cpu_state;
+// Set up initial state via cpu_state...
+stub.execute_command(raw_gte_opcode, cpu_state);
 ```
 
-Or register custom implementations at runtime:
+### GTE Instruction Field Decoding (pcsx-compatible)
 
 ```cpp
-DummyGTEAPI api;
-api.register_command("01", [](RegisterState& s) {
-    // Custom RTPS implementation
-});
+// In pcsx: gteop = psxRegs.code & 0x1ffffff
+// Fields are extracted from gteop using bit masks:
+
+#define GTE_SF(op)   ((op >> 19) & 1)    // bit 19: shift fraction
+#define GTE_MX(op)   ((op >> 17) & 3)    // bits 17-16: matrix select
+#define GTE_V(op)    ((op >> 15) & 3)    // bits 15-14: vector select
+#define GTE_CV(op)   ((op >> 13) & 3)    // bits 13-12: translation vector
+#define GTE_LM(op)   ((op >> 10) & 1)    // bit 10: saturate mode
+#define GTE_FUNCT(op) (op & 0x3F)         // bits 5-0: real GTE command
+```
+
+### Register Names (pcsx-compatible)
+
+The framework provides register name constants matching pcsx naming:
+
+```cpp
+// Data registers (CP2D)
+gte::RegNames::VXY0   // d0 - Vector 0 X/Y
+gte::RegNames::VZ0    // d1 - Vector 0 Z
+gte::RegNames::IR1    // d9 - Interpolate accumulator 1
+gte::RegNames::MAC1   // d25 - Math accumulator 1
+gte::RegNames::FLAG   // d31 - Flags register
+
+// Control registers (CP2C)
+gte::RegNames::RT11   // c0 - Rotation matrix element
+gte::RegNames::TRX    // c9 - Translation X
+gte::RegNames::RBK    // c21 - Background color R
+gte::RegNames::RFC    // c32 - Far color R
+gte::RegNames::H      // c37 - Projection distance
 ```
 
 ## Test File Format
@@ -139,7 +172,8 @@ Test files are JSON arrays of test cases. Each test case contains:
 ```json
 {
     "name": "test description",
-    "command": "01",
+    "command": 1,
+    "raw_opcode": 1073742209,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -156,7 +190,24 @@ Test files are JSON arrays of test cases. Each test case contains:
 }
 ```
 
-See the main GTE repository README for full test format documentation.
+### Opcode Fields
+
+The GTE instruction is a 25-bit value (bits 24-0 of COP2 instruction):
+
+| Bits | Field | Description |
+|------|-------|-------------|
+| 24-20 | fakeop | Fake GTE command number (emulator-specific) |
+| 19 | sf | Shift fraction (1 = result >> 12) |
+| 18-17 | mx | Matrix select (0=Rotation, 1=Light, 2=Color) |
+| 16-15 | v | Vector select (0=V0, 1=V1, 2=V2, 3=IR) |
+| 14-13 | cv | Translation vector (0=TR, 1=BK, 2=FC) |
+| 12-11 | - | Reserved (zero) |
+| 10 | lm | Saturate mode (0=signed, 1=unsigned) |
+| 9-6 | - | Reserved (zero) |
+| 5-0 | command | Real GTE command opcode |
+
+When `raw_opcode` is present, fields are extracted from it using pcsx-compatible decoding.
+When absent, the framework assembles the opcode from individual fields.
 
 ## Output Format
 
@@ -165,7 +216,7 @@ GTE Test Framework Runner
 ==========================
 
 Test directory: ../v1
-Registered commands: 16
+Registered commands: 22
 
 Running tests...
 
@@ -187,8 +238,8 @@ Pass rate:    29.4%
 ========================================
 
 --- ../v1/rtps.json ---
-  [PASS] RTPS basic identity - all zeros (cmd: 0x01)
-  [FAIL] RTPS - simple translation (cmd: 0x01)
+  [PASS] RTPS basic identity - all zeros (cmd: 0x01 op: 0x00000001)
+  [FAIL] RTPS - simple translation (cmd: 0x01 op: 0x00000001)
          d9: expected 0x00000200 got 0x00000000
          d10: expected 0x00000400 got 0x00000000
 

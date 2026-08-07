@@ -4,51 +4,33 @@
 
 namespace gte {
 
-DummyGTEAPI::DummyGTEAPI() {
-    // Register all GTE commands with dummy (pass-through) implementations
-    register_command(0x01, [this](RegisterState& s) { cmd_rtps(s, 0, 0, 0, 0, 0); });
-    register_command(0x02, [this](RegisterState& s) { cmd_rtpt(s, 0, 0, 0, 0, 0); });
-    register_command(0x06, [this](RegisterState& s) { cmd_nclip(s, 0, 0, 0, 0, 0); });
-    register_command(0x0C, [this](RegisterState& s) { cmd_op(s, 0, 0, 0, 0, 0); });
-    register_command(0x0E, [this](RegisterState& s) { cmd_ncds(s, 0, 0, 0, 0, 0); });
-    register_command(0x10, [this](RegisterState& s) { cmd_dpcs(s, 0, 0, 0, 0, 0); });
-    register_command(0x11, [this](RegisterState& s) { cmd_intpl(s, 0, 0, 0, 0, 0); });
-    register_command(0x12, [this](RegisterState& s) { cmd_mvmva(s, 0, 0, 0, 0, 0); });
-    register_command(0x1B, [this](RegisterState& s) { cmd_nccs(s, 0, 0, 0, 0, 0); });
-    register_command(0x1E, [this](RegisterState& s) { cmd_ncs(s, 0, 0, 0, 0, 0); });
-    register_command(0x28, [this](RegisterState& s) { cmd_sqr(s, 0, 0, 0, 0, 0); });
-    register_command(0x29, [this](RegisterState& s) { cmd_dcpl(s, 0, 0, 0, 0, 0); });
-    register_command(0x2D, [this](RegisterState& s) { cmd_avsz3(s, 0, 0, 0, 0, 0); });
-    register_command(0x2E, [this](RegisterState& s) { cmd_avsz4(s, 0, 0, 0, 0, 0); });
-    register_command(0x3D, [this](RegisterState& s) { cmd_gpf(s, 0, 0, 0, 0, 0); });
-    register_command(0x3E, [this](RegisterState& s) { cmd_gpl(s, 0, 0, 0, 0, 0); });
-    register_command(0x14, [this](RegisterState& s) { cmd_cdp(s, 0, 0, 0, 0, 0); });
-    register_command(0x16, [this](RegisterState& s) { cmd_ncdt(s, 0, 0, 0, 0, 0); });
-    register_command(0x20, [this](RegisterState& s) { cmd_nct(s, 0, 0, 0, 0, 0); });
-    register_command(0x2A, [this](RegisterState& s) { cmd_dpct(s, 0, 0, 0, 0, 0); });
-    register_command(0x3F, [this](RegisterState& s) { cmd_ncct(s, 0, 0, 0, 0, 0); });
-    register_command(0x1C, [this](RegisterState& s) { cmd_cc(s, 0, 0, 0, 0, 0); });
+// GTEStub implementation
+GTEStub::GTEStub() {}
+
+GTEStub::~GTEStub() {}
+
+GTEFields GTEStub::decode_fields(int32_t opcode) const {
+    return GTEFields::decode(opcode);
 }
 
-void DummyGTEAPI::execute_command(int32_t command, RegisterState& state,
-                                   int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
-    auto it = commands_.find(command);
+void GTEStub::execute_command(int32_t opcode, CPUState& cpu) {
+    auto it = commands_.find(opcode);
     if (it == commands_.end()) {
-        std::cerr << "Warning: Unknown GTE command 0x" << std::hex << command << std::dec << ", skipping\n";
+        std::cerr << "Warning: Unknown GTE command 0x" << std::hex << (opcode & 0x3F) << std::dec << ", skipping\n";
         return;
     }
-    it->second(state);
+    it->second(opcode, cpu);
 }
 
-void DummyGTEAPI::register_command(int32_t opcode, CommandFunc func) {
+void GTEStub::register_command(int32_t opcode, CommandFunc func) {
     commands_[opcode] = func;
 }
 
-void DummyGTEAPI::unregister_command(int32_t opcode) {
+void GTEStub::unregister_command(int32_t opcode) {
     commands_.erase(opcode);
 }
 
-std::vector<int32_t> DummyGTEAPI::get_supported_commands() const {
+std::vector<int32_t> GTEStub::get_supported_commands() const {
     std::vector<int32_t> cmds;
     for (const auto& kv : commands_) {
         cmds.push_back(kv.first);
@@ -56,140 +38,168 @@ std::vector<int32_t> DummyGTEAPI::get_supported_commands() const {
     return cmds;
 }
 
-// Dummy implementations - these are stubs that do nothing or pass through values.
-// Real implementations would contain the actual GTE instruction logic.
-// These dummies are designed to be replaced by real emulator implementations.
+// Dummy command implementations - stubs that do nothing
+// Real implementations would access CPUState to read inputs and write outputs
+// The raw opcode is passed so implementations can decode fields in place
 
-void DummyGTEAPI::cmd_rtps(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_rtps_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // RTPS: Round Perspective Transformation (single vertex)
     // Dummy: no operation, registers remain unchanged
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_rtpt(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_rtpt_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // RTPT: Round Perspective Transformation (triple vertex)
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_mvmva(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_mvmva_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // MVMVA: Matrix Vector Multiply with Add
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_nclip(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_nclip_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // NCLIP: Normal Clipping
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_avsz3(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_avsz3_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // AVSZ3: Average Z for 3 vertices
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_avsz4(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_avsz4_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // AVSZ4: Average Z for 4 vertices
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_sqr(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_sqr_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // SQR: Square of Vector
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_op(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_op_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // OP: Outer Product
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_gpf(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_gpf_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // GPF: General Purpose Interpolation (flat shading)
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_gpl(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_gpl_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // GPL: General Purpose Interpolation with base (smooth shading)
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_ncs(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_ncs_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // NCS: Normal Color Single
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_nccs(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_nccs_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // NCCS: Normal Color Color Single
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_ncds(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_ncds_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // NCDS: Normal Color Depth Cue Single
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_dpcs(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_dpcs_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // DPCS: Depth Cue Color Single
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_intpl(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_intpl_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // INTPL: Interpolation
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_dcpl(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_dcpl_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // DCPL: Depth Cue Color Per light
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_dpct(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_dpct_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // DPCT: Depth Cueing (triple)
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_nct(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_nct_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // NCT: Normal color (triple)
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_ncdt(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_ncdt_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // NCDT: Normal color depth cue (triple vectors)
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_ncct(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_ncct_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // NCCT: Normal Color Color (triple vector)
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_cdp(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_cdp_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // CDP: Color Depth Que
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
-void DummyGTEAPI::cmd_cc(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm) {
+void cmd_cc_stub(int32_t opcode, CPUState& cpu) {
+    (void)opcode; (void)cpu;
     // CC: Color Color
     // Dummy: no operation
-    (void)state; (void)sf; (void)mx; (void)v; (void)cv; (void)lm;
 }
 
+// Register all GTE commands with dummy implementations
+// Opcodes are the real GTE command values (bits 5-0)
+// The full opcode is assembled by the test framework from test data fields
+void register_dummy_commands(GTEStub& stub) {
+    stub.register_command(0x01, cmd_rtps_stub);
+    stub.register_command(0x02, cmd_rtpt_stub);
+    stub.register_command(0x06, cmd_nclip_stub);
+    stub.register_command(0x0C, cmd_op_stub);
+    stub.register_command(0x0E, cmd_ncds_stub);
+    stub.register_command(0x10, cmd_dpcs_stub);
+    stub.register_command(0x11, cmd_intpl_stub);
+    stub.register_command(0x12, cmd_mvmva_stub);
+    stub.register_command(0x1B, cmd_nccs_stub);
+    stub.register_command(0x1E, cmd_ncs_stub);
+    stub.register_command(0x28, cmd_sqr_stub);
+    stub.register_command(0x29, cmd_dcpl_stub);
+    stub.register_command(0x2D, cmd_avsz3_stub);
+    stub.register_command(0x2E, cmd_avsz4_stub);
+    stub.register_command(0x3D, cmd_gpf_stub);
+    stub.register_command(0x3E, cmd_gpl_stub);
+    stub.register_command(0x14, cmd_cdp_stub);
+    stub.register_command(0x16, cmd_ncdt_stub);
+    stub.register_command(0x20, cmd_nct_stub);
+    stub.register_command(0x2A, cmd_dpct_stub);
+    stub.register_command(0x3F, cmd_ncct_stub);
+    stub.register_command(0x1C, cmd_cc_stub);
 }
+
+} // namespace gte

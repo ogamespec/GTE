@@ -1,10 +1,12 @@
 #include "gte_model.h"
+#include "dummy_api.h"
 #include <cstring>
 #include <climits>
 #include <cstdlib>
 
 namespace gte {
 
+// RegisterState implementation
 RegisterState::RegisterState() {
     clear();
 }
@@ -49,7 +51,21 @@ void RegisterState::set_control(int index, int32_t value) {
     }
 }
 
-// Static helper methods
+void RegisterState::apply_to_cpu(CPUState& cpu) const {
+    for (int i = 0; i < 32; i++) {
+        cpu.set_data_d(i, data[i]);
+        cpu.set_control_d(i, control[i]);
+    }
+}
+
+void RegisterState::load_from_cpu(const CPUState& cpu) {
+    for (int i = 0; i < 32; i++) {
+        data[i] = cpu.get_data_d(i);
+        control[i] = cpu.get_control_d(i);
+    }
+}
+
+// GTEModel static helpers
 int32_t GTEModel::saturate_16_signed(int32_t value) {
     if (value > 0x7FFF) return 0x7FFF;
     if (value < -0x8000) return -0x8000;
@@ -63,25 +79,73 @@ int32_t GTEModel::saturate_16_unsigned(int32_t value) {
 }
 
 int32_t GTEModel::saturate_32(int32_t value) {
-    // 32-bit saturation is already handled by int32_t range
     return value;
 }
 
 int32_t GTEModel::shift_result(int32_t value, int32_t sf) {
     if (sf) {
-        // Arithmetic right shift by 12 bits
         return value >> 12;
     }
     return value;
 }
 
 RegisterState GTEModel::get_state() const {
-    // This is a dummy class, state is managed externally
     return RegisterState();
 }
 
 void GTEModel::set_state(const RegisterState& state) {
-    // This is a dummy class, state is managed externally
+    (void)state;
+}
+
+// GTECPUState implementation
+GTECPUState::GTECPUState() {}
+
+GTECPUState::GTECPUState(const RegisterState& state) : state_(state) {}
+
+void GTECPUState::set_state(const RegisterState& state) const {
+    state_ = state;
+}
+
+RegisterState GTECPUState::get_state() const {
+    return state_;
+}
+
+int32_t GTECPUState::get_data_d(int n) const {
+    if (n < 0 || n > 31) return 0;
+    return state_.data[n];
+}
+
+void GTECPUState::set_data_d(int n, int32_t value) {
+    if (n >= 0 && n <= 31) {
+        state_.data[n] = value;
+    }
+}
+
+int32_t GTECPUState::get_control_d(int n) const {
+    if (n < 0 || n > 31) return 0;
+    return state_.control[n];
+}
+
+void GTECPUState::set_control_d(int n, int32_t value) {
+    if (n >= 0 && n <= 31) {
+        state_.control[n] = value;
+    }
+}
+
+int32_t GTECPUState::get_data_raw(int n) const {
+    return get_data_d(n);
+}
+
+void GTECPUState::set_data_raw(int n, int32_t value) {
+    set_data_d(n, value);
+}
+
+int32_t GTECPUState::get_control_raw(int n) const {
+    return get_control_d(n);
+}
+
+void GTECPUState::set_control_raw(int n, int32_t value) {
+    set_control_d(n, value);
 }
 
 }
