@@ -156,3 +156,8 @@ for test in tests:
 
 - PlayStation GTE Technical Reference: `gte.txt`
 - Similar Z80 test suite: https://github.com/SingleStepTests/z80
+
+
+![x83ag3e0ug3f1.png](x83ag3e0ug3f1.png)
+
+:warning: Content is mostly AI generated.
