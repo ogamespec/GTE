@@ -12,7 +12,6 @@ namespace gte {
 struct TestResult {
     std::string test_name;
     int32_t command;
-    uint32_t raw_opcode;
     std::string filename;
     bool passed;
     std::string failure_reason;

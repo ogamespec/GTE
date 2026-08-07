@@ -60,10 +60,6 @@ JsonArray get_array(const JsonPtr& val);
 JsonPtr get_field(const JsonObject& obj, const std::string& field, const JsonPtr& default_val = JsonPtr{});
 int64_t get_int_field(const JsonObject& obj, const std::string& field, int64_t default_val = 0);
 
-// Get raw GTE opcode field from test case JSON
-// Supports both decimal and hex string values (e.g., 1073742209 or "0x40010001")
-int32_t get_raw_opcode_field(const JsonObject& obj, int32_t default_val = 0);
-
 }
 
 #endif

@@ -52,15 +52,8 @@ TestFile TestFramework::load_test_file(const std::string& filepath) {
         tc.cv = get_int_field(obj, "cv", 0);
         tc.lm = get_int_field(obj, "lm", 0);
 
-        // Get raw opcode from test data if present
-        // When raw_opcode is provided, use it directly
-        // When absent, assemble from test properties (command, fakeop, sf, mx, v, cv, lm)
-        tc.raw_opcode = get_raw_opcode_field(obj, 0);
-        if (tc.raw_opcode == 0) {
-            tc.raw_opcode = static_cast<int32_t>(
-                assemble_gte_opcode(tc.command, tc.fakeop, tc.sf, tc.mx, tc.v, tc.cv, tc.lm)
-            );
-        }
+        // Assemble GTE opcode from test properties per GTE spec (gte.txt)
+        uint32_t opcode = assemble_gte_opcode(tc.command, tc.fakeop, tc.sf, tc.mx, tc.v, tc.cv, tc.lm);
 
         auto initial_ptr = get_field(obj, "initial");
         auto final_ptr = get_field(obj, "final");
@@ -101,14 +94,16 @@ TestResult TestFramework::run_test(const TestCase& test, GTEStub& stub) {
     TestResult result;
     result.test_name = test.name;
     result.command = static_cast<int32_t>(test.command);
-    result.raw_opcode = static_cast<uint32_t>(test.raw_opcode);
     result.passed = true;
+
+    // Assemble GTE opcode from test properties per GTE spec (gte.txt)
+    uint32_t opcode = assemble_gte_opcode(test.command, test.fakeop, test.sf, test.mx, test.v, test.cv, test.lm);
 
     // Create CPU state from initial register state
     GTECPUState cpu_state(test.initial);
 
-    // Execute command via GTEStub::gte_execute with assembled opcode
-    stub.gte_execute(static_cast<uint32_t>(test.raw_opcode), cpu_state);
+    // Execute command via GTEStub::gte_execute
+    stub.gte_execute(opcode, cpu_state);
 
     // Get actual state and compare with expected final state
     RegisterState actual_state = cpu_state.get_state();

@@ -132,10 +132,6 @@ struct TestCase {
     int32_t v;
     int32_t cv;
     int32_t lm;
-    // Pre-assembled GTE opcode from test data (if present)
-    // When present, test framework uses this directly
-    // When absent, framework assembles from command, fakeop, sf, mx, v, cv, lm
-    int32_t raw_opcode;
     RegisterState initial;
     RegisterState final_state;
 };
