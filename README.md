@@ -1,4 +1,4 @@
-# GTE (Geometric Transform Engine) Test Suite
+# GTE (Geometry Transform Engine) Test Suite
 
 Repository for JSMoo-based GTE JSON test files for the PlayStation Geometry Transform Engine.
 
@@ -6,7 +6,7 @@ Repository for JSMoo-based GTE JSON test files for the PlayStation Geometry Tran
 
 The GTE is a coprocessor in the PlayStation (PS1) responsible for geometric and color calculations using fixed-point arithmetic. This repository contains comprehensive test datasets for verifying GTE instruction implementations.
 
-Unlike the Z80 tests which focus on cycle-accurate bus states, these GTE tests focus on register state before and after executing GTE commands, covering all edge cases and saturation conditions.
+These GTE tests focus on register state before and after executing GTE commands, covering all edge cases and saturation conditions.
 
 ## Test Format
 
@@ -132,7 +132,3 @@ for test in tests:
 
 - PlayStation GTE Technical Reference: `gte.txt`
 - Similar Z80 test suite: https://github.com/SingleStepTests/z80
-
-## License
-
-MIT
