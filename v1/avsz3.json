@@ -2,7 +2,7 @@
   {
     "name": "AVSZ3 - all zeros",
     "command": 45,
-    "fakeop": 3,
+    "fakeop": 21,
     "initial": {
       "d7": 0,
       "d16": 0, "d17": 0, "d18": 0, "d19": 0,
@@ -18,7 +18,7 @@
   {
     "name": "AVSZ3 - equal Z values",
     "command": 45,
-    "fakeop": 3,
+    "fakeop": 21,
     "initial": {
       "d7": 0,
       "d16": 100, "d17": 100, "d18": 100, "d19": 100,
@@ -34,7 +34,7 @@
   {
     "name": "AVSZ3 - ZSF3=1 (768 = 1.0 in Q12)",
     "command": 45,
-    "fakeop": 3,
+    "fakeop": 21,
     "initial": {
       "d7": 0,
       "d16": 100, "d17": 200, "d18": 300, "d19": 400,
@@ -50,7 +50,7 @@
   {
     "name": "AVSZ3 - max Z values",
     "command": 45,
-    "fakeop": 3,
+    "fakeop": 21,
     "initial": {
       "d7": 0,
       "d16": 65535, "d17": 65535, "d18": 65535, "d19": 65535,
@@ -66,7 +66,7 @@
   {
     "name": "AVSZ3 - negative ZSF3",
     "command": 45,
-    "fakeop": 3,
+    "fakeop": 21,
     "initial": {
       "d7": 0,
       "d16": 100, "d17": 200, "d18": 300, "d19": 400,
@@ -82,7 +82,7 @@
   {
     "name": "AVSZ3 - single non-zero Z",
     "command": 45,
-    "fakeop": 3,
+    "fakeop": 21,
     "initial": {
       "d7": 0,
       "d16": 0, "d17": 0, "d18": 0, "d19": 512,
@@ -98,7 +98,7 @@
   {
     "name": "AVSZ3 - OTZ saturation to 0xFFFF",
     "command": 45,
-    "fakeop": 3,
+    "fakeop": 21,
     "initial": {
       "d7": 0,
       "d16": 65535, "d17": 65535, "d18": 65535, "d19": 65535,

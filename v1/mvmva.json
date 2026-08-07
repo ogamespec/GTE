@@ -2,7 +2,7 @@
   {
     "name": "MVMVA (RT), (V0), (TR),",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -33,7 +33,7 @@
   {
     "name": "MVMVA (RT), (V0), (TR),",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 1,
     "mx": 0,
     "v": 0,
@@ -64,7 +64,7 @@
   {
     "name": "MVMVA (LLM), (V1), (BK),",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 1,
     "v": 1,
@@ -95,7 +95,7 @@
   {
     "name": "MVMVA (LCM), (V2), (FC),",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 2,
     "v": 2,
@@ -126,7 +126,7 @@
   {
     "name": "MVMVA (RT), (IR), (TR),",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 0,
     "v": 3,
@@ -156,7 +156,7 @@
   {
     "name": "MVMVA (garbage matrix),",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 3,
     "v": 0,
@@ -187,7 +187,7 @@
   {
     "name": "MVMVA (BK), - background color",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -218,7 +218,7 @@
   {
     "name": "MVMVA (None),",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -249,7 +249,7 @@
   {
     "name": "MVMVA overflow test - large values",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -280,7 +280,7 @@
   {
     "name": "MVMVA negative values",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -311,7 +311,7 @@
   {
     "name": "MVMVA mixed rotation matrix",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -342,7 +342,7 @@
   {
     "name": "MVMVA - saturation lm=1 (IR1,IR2 to 0..7FFF)",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -373,7 +373,7 @@
   {
     "name": "MVMVA - saturation lm=0 (IR1,IR2 to -8000..7FFF)",
     "command": 18,
-    "fakeop": 2,
+    "fakeop": 4,
     "sf": 0,
     "mx": 0,
     "v": 0,

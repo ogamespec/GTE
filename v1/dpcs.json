@@ -2,7 +2,7 @@
   {
     "name": "DPCS - all zeros",
     "command": 16,
-    "fakeop": 2,
+    "fakeop": 7,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -34,7 +34,7 @@
   {
     "name": "DPCS - with RGB from RGBC",
     "command": 16,
-    "fakeop": 2,
+    "fakeop": 7,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -67,7 +67,7 @@
   {
     "name": "DPCS - with IR0 interpolation",
     "command": 16,
-    "fakeop": 2,
+    "fakeop": 7,
     "sf": 0,
     "mx": 0,
     "v": 0,
@@ -100,7 +100,7 @@
   {
     "name": "DPCS - saturation lm=1 (IR1,IR2 to 0..7FFF)",
     "command": 16,
-    "fakeop": 2,
+    "fakeop": 7,
     "sf": 0,
     "mx": 0,
     "v": 0,
