@@ -5,6 +5,7 @@
 #include <string>
 #include <functional>
 #include <map>
+#include <vector>
 
 namespace gte {
 
@@ -21,12 +22,11 @@ public:
     void register_command(const std::string& opcode, CommandFunc func);
     void unregister_command(const std::string& opcode);
 
-    static std::vector<std::string> get_supported_commands();
+    std::vector<std::string> get_supported_commands() const;
 
 private:
     std::map<std::string, CommandFunc> commands_;
 
-    // Individual GTE command implementations (all stubs/dummies)
     void cmd_rtps(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
     void cmd_rtpt(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);
     void cmd_mvmva(RegisterState& state, int32_t sf, int32_t mx, int32_t v, int32_t cv, int32_t lm);

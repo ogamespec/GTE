@@ -15,6 +15,10 @@ GTE-Runner is a C++ testing framework that:
 ```
 gte-test-framework/
 ├── Makefile
+├── build.ps1
+├── build.bat
+├── run.bat
+├── README.md
 ├── include/
 │   ├── json_parser.h      - Lightweight JSON parser (no dependencies)
 │   ├── gte_model.h        - GTE register state model
@@ -45,24 +49,23 @@ make
 
 ```powershell
 cd gte-test-framework
-# Using Visual Studio Developer Command Prompt
-cl /std:c++17 /O2 /Iinclude /Fe:gte-runner.exe src/*.cpp
+.\build.ps1
 ```
 
 ## Usage
 
 ```bash
-# Run tests from default directory (./v1)
-./gte-runner
+# Run tests from parent directory v1/
+./gte-runner ../v1
 
 # Specify test directory
-./gte-runner ./v1
+./gte-runner ./test_data
 
 # Show only summary (no detailed report)
-./gte-runner -s
+./gte-runner ../v1 -s
 
 # Verbose output
-./gte-runner -v
+./gte-runner ../v1 -v
 
 # Show help
 ./gte-runner -h
@@ -79,7 +82,9 @@ cl /std:c++17 /O2 /Iinclude /Fe:gte-runner.exe src/*.cpp
 
 ## Dummy GTE API
 
-The framework includes a Dummy GTE API with stub implementations for all 16 GTE commands:
+The framework includes a Dummy GTE API with **stub implementations** for all 16 GTE commands.
+
+These stubs are designed to be replaced by real GTE instruction implementations from emulators.
 
 | Opcode | Command | Description |
 |--------|---------|-------------|
@@ -107,7 +112,7 @@ Replace the dummy command implementations with real GTE instruction logic:
 ```cpp
 // In dummy_api.cpp, replace the stub:
 void DummyGTEAPI::cmd_rtps(RegisterState& state, ...) {
-    // TODO: Implement actual RTPS instruction
+    // Implement actual RTPS instruction
     // Read input registers, compute result, write output registers
 }
 ```
@@ -153,26 +158,31 @@ See the main GTE repository README for full test format documentation.
 GTE Test Framework Runner
 ==========================
 
-Test directory: ./v1
+Test directory: ../v1
 Registered commands: 16
 
 Running tests...
 
+Loading test file: ../v1/rtps.json
+Loading test file: ../v1/rtpt.json
+...
+
 ========================================
        GTE Test Framework Summary
 ========================================
-Total tests:  1234
-Passed:       0
-Failed:       1234
-Pass rate:    0.0%
+Total tests:  119
+Passed:       35
+Failed:       84
+Pass rate:    29.4%
 ========================================
 
 ========================================
        Detailed Test Report
 ========================================
 
---- v1/rtps.json ---
-  [FAIL] RTPS basic identity - all zeros (cmd: 0x01)
+--- ../v1/rtps.json ---
+  [PASS] RTPS basic identity - all zeros (cmd: 0x01)
+  [FAIL] RTPS - simple translation (cmd: 0x01)
          d9: expected 0x00000200 got 0x00000000
          d10: expected 0x00000400 got 0x00000000
 

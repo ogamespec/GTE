@@ -1,7 +1,6 @@
 #include "json_parser.h"
 #include <sstream>
 #include <iomanip>
-#include <cmath>
 #include <cstdlib>
 
 namespace gte {
@@ -59,7 +58,7 @@ std::string JsonParser::parse_string() {
                 case 'b': result += '\b'; break;
                 case 'f': result += '\f'; break;
                 default:
-                    throw std::runtime_error(std::string("Unknown escape sequence: ") + input_[pos_]);
+                    throw std::runtime_error(std::string("Unknown escape: ") + input_[pos_]);
             }
         } else {
             result += input_[pos_];
@@ -92,13 +91,7 @@ int64_t JsonParser::parse_integer() {
     return negative ? -value : value;
 }
 
-int64_t JsonParser::parse_hex_string(const std::string& hex) {
-    char* end;
-    long val = std::strtol(hex.c_str(), &end, 16);
-    return static_cast<int64_t>(val);
-}
-
-JsonValue JsonParser::parse_value(const std::string& json) {
+JsonPtr JsonParser::parse_value(const std::string& json) {
     input_ = json;
     pos_ = 0;
     skip_whitespace();
@@ -108,37 +101,47 @@ JsonValue JsonParser::parse_value(const std::string& json) {
     } else if (c == '[') {
         return parse_json_array();
     } else if (c == '"') {
-        return parse_string();
+        return std::make_shared<JsonValue>(parse_string());
     } else if (c == '-' || (c >= '0' && c <= '9')) {
-        return parse_integer();
+        return std::make_shared<JsonValue>(parse_integer());
+    } else if (c == 't') {
+        if (input_.substr(pos_, 4) == "true") {
+            pos_ += 4;
+            return std::make_shared<JsonValue>(static_cast<int64_t>(1));
+        }
+        throw std::runtime_error("Expected 'true'");
+    } else if (c == 'f') {
+        if (input_.substr(pos_, 5) == "false") {
+            pos_ += 5;
+            return std::make_shared<JsonValue>(static_cast<int64_t>(0));
+        }
+        throw std::runtime_error("Expected 'false'");
+    } else if (c == 'n') {
+        if (input_.substr(pos_, 4) == "null") {
+            pos_ += 4;
+            return std::make_shared<JsonValue>(static_cast<int64_t>(0));
+        }
+        throw std::runtime_error("Expected 'null'");
     } else {
         throw std::runtime_error(std::string("Unexpected character: ") + c);
     }
 }
 
-JsonObject JsonParser::parse_object(const std::string& json) {
-    JsonValue val = parse_value(json);
-    if (auto* obj = std::get_if<JsonObject>(&val)) {
-        return *obj;
-    }
-    throw std::runtime_error("Expected JSON object");
+JsonPtr JsonParser::parse_object(const std::string& json) {
+    return parse_value(json);
 }
 
-JsonArray JsonParser::parse_array(const std::string& json) {
-    JsonValue val = parse_value(json);
-    if (auto* arr = std::get_if<JsonArray>(&val)) {
-        return *arr;
-    }
-    throw std::runtime_error("Expected JSON array");
+JsonPtr JsonParser::parse_array(const std::string& json) {
+    return parse_value(json);
 }
 
-JsonArray JsonParser::parse_json_array() {
+JsonPtr JsonParser::parse_json_array() {
     expect_char('[');
     skip_whitespace();
     JsonArray arr;
     if (peek_char() == ']') {
         get_char();
-        return arr;
+        return std::make_shared<JsonValue>(arr);
     }
     while (true) {
         arr.push_back(parse_json_value());
@@ -148,19 +151,19 @@ JsonArray JsonParser::parse_json_array() {
             break;
         }
         if (c != ',') {
-            throw std::runtime_error(std::string("Expected ',' or ']' in array, got '") + c + "'");
+            throw std::runtime_error(std::string("Expected ',' or ']' in array"));
         }
     }
-    return arr;
+    return std::make_shared<JsonValue>(arr);
 }
 
-JsonObject JsonParser::parse_json_object() {
+JsonPtr JsonParser::parse_json_object() {
     expect_char('{');
     skip_whitespace();
     JsonObject obj;
     if (peek_char() == '}') {
         get_char();
-        return obj;
+        return std::make_shared<JsonValue>(obj);
     }
     while (true) {
         skip_whitespace();
@@ -174,13 +177,13 @@ JsonObject JsonParser::parse_json_object() {
             break;
         }
         if (c != ',') {
-            throw std::runtime_error(std::string("Expected ',' or '}' in object, got '") + c + "'");
+            throw std::runtime_error(std::string("Expected ',' or '}' in object"));
         }
     }
-    return obj;
+    return std::make_shared<JsonValue>(obj);
 }
 
-JsonValue JsonParser::parse_json_value() {
+JsonPtr JsonParser::parse_json_value() {
     skip_whitespace();
     char c = peek_char();
     if (c == '{') {
@@ -188,28 +191,25 @@ JsonValue JsonParser::parse_json_value() {
     } else if (c == '[') {
         return parse_json_array();
     } else if (c == '"') {
-        return parse_string();
+        return std::make_shared<JsonValue>(parse_string());
     } else if (c == '-' || (c >= '0' && c <= '9')) {
-        return parse_integer();
+        return std::make_shared<JsonValue>(parse_integer());
     } else if (c == 't') {
-        // true
         if (input_.substr(pos_, 4) == "true") {
             pos_ += 4;
-            return static_cast<int64_t>(1);
+            return std::make_shared<JsonValue>(static_cast<int64_t>(1));
         }
         throw std::runtime_error("Expected 'true'");
     } else if (c == 'f') {
-        // false
         if (input_.substr(pos_, 5) == "false") {
             pos_ += 5;
-            return static_cast<int64_t>(0);
+            return std::make_shared<JsonValue>(static_cast<int64_t>(0));
         }
         throw std::runtime_error("Expected 'false'");
     } else if (c == 'n') {
-        // null
         if (input_.substr(pos_, 4) == "null") {
             pos_ += 4;
-            return static_cast<int64_t>(0);
+            return std::make_shared<JsonValue>(static_cast<int64_t>(0));
         }
         throw std::runtime_error("Expected 'null'");
     } else {
@@ -217,43 +217,36 @@ JsonValue JsonParser::parse_json_value() {
     }
 }
 
-// Helper function implementations
-int64_t get_int(const JsonValue& val, int64_t default_val) {
-    if (auto* p = std::get_if<int64_t>(&val)) {
-        return *p;
+// Helper implementations
+int64_t get_int(const JsonPtr& val, int64_t default_val) {
+    if (val && val->type == JsonValue::INTEGER) {
+        return val->int_val;
     }
     return default_val;
 }
 
-double get_double(const JsonValue& val, double default_val) {
-    if (auto* p = std::get_if<double>(&val)) {
-        return *p;
+std::string get_string(const JsonPtr& val, const std::string& default_val) {
+    if (val && val->type == JsonValue::STRING) {
+        return val->str_val;
     }
     return default_val;
 }
 
-std::string get_string(const JsonValue& val, const std::string& default_val) {
-    if (auto* p = std::get_if<std::string>(&val)) {
-        return *p;
-    }
-    return default_val;
-}
-
-JsonObject get_object(const JsonValue& val) {
-    if (auto* p = std::get_if<JsonObject>(&val)) {
-        return *p;
+JsonObject get_object(const JsonPtr& val) {
+    if (val && val->type == JsonValue::OBJECT) {
+        return val->obj_val;
     }
     return JsonObject{};
 }
 
-JsonArray get_array(const JsonValue& val) {
-    if (auto* p = std::get_if<JsonArray>(&val)) {
-        return *p;
+JsonArray get_array(const JsonPtr& val) {
+    if (val && val->type == JsonValue::ARRAY) {
+        return val->arr_val;
     }
     return JsonArray{};
 }
 
-JsonValue get_field(const JsonObject& obj, const std::string& field, const JsonValue& default_val) {
+JsonPtr get_field(const JsonObject& obj, const std::string& field, const JsonPtr& default_val) {
     auto it = obj.find(field);
     if (it != obj.end()) {
         return it->second;
@@ -263,12 +256,13 @@ JsonValue get_field(const JsonObject& obj, const std::string& field, const JsonV
 
 int64_t get_int_field(const JsonObject& obj, const std::string& field, int64_t default_val) {
     auto it = obj.find(field);
-    if (it != obj.end()) {
-        if (auto* p = std::get_if<int64_t>(&it->second)) {
-            return *p;
+    if (it != obj.end() && it->second) {
+        if (it->second->type == JsonValue::INTEGER) {
+            return it->second->int_val;
         }
-        if (auto* p = std::get_if<std::string>(&it->second)) {
-            return JsonParser::parse_hex_string(*p);
+        if (it->second->type == JsonValue::STRING) {
+            char* end;
+            return static_cast<int64_t>(std::strtol(it->second->str_val.c_str(), &end, 16));
         }
     }
     return default_val;

@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
     gte::DummyGTEAPI api;
 
     // Get supported commands
-    auto commands = gte::DummyGTEAPI::get_supported_commands();
+    auto commands = api.get_supported_commands();
     std::cout << "Registered commands: " << commands.size() << "\n";
     if (verbose) {
         for (const auto& cmd : commands) {

@@ -3,7 +3,9 @@
 
 #include <string>
 #include <map>
+#include <vector>
 #include <cstdint>
+#include <cstring>
 
 namespace gte {
 
@@ -46,12 +48,9 @@ public:
     RegisterState get_state() const;
     void set_state(const RegisterState& state);
 
-    // Saturation helpers
     static int32_t saturate_16_signed(int32_t value);
     static int32_t saturate_16_unsigned(int32_t value);
     static int32_t saturate_32(int32_t value);
-
-    // Fixed-point shift
     static int32_t shift_result(int32_t value, int32_t sf);
 };
 

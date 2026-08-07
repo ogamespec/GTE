@@ -1,36 +1,57 @@
 @echo off
 REM GTE Test Framework - Windows Build Script
-REM Requires Visual Studio (cl.exe) in PATH
+REM Automatically loads Visual Studio environment
 
 echo ========================================
 echo   GTE Test Framework - Build Script
 echo ========================================
 echo.
 
-REM Check if cl.exe is available
-where cl >nul 2>&1
-if %errorlevel% neq 0 (
-    echo Error: MSVC compiler (cl.exe) not found!
+REM Find and load Visual Studio environment
+set VS_PATH=
+if exist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat" (
+    set VS_PATH="C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat"
+) else if exist "C:\Program Files (x86)\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat" (
+    set VS_PATH="C:\Program Files (x86)\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat"
+)
+
+if "%VS_PATH%"=="" (
+    echo Error: Visual Studio environment not found!
     echo.
-    echo Please run this script from:
-    echo   "Visual Studio Developer Command Prompt"
-    echo or
-    echo   "Visual Studio x64 Native Tools Command Prompt"
-    echo.
-    echo Alternatively, install MinGW-w64 and use Makefile.
+    echo Please install Visual Studio Build Tools:
+    echo   https://visualstudio.microsoft.com/visual-cpp-build-tools/
     echo.
     pause
     exit /b 1
 )
 
-echo Found MSVC compiler.
+echo Loading Visual Studio environment...
+call %VS_PATH% x64 >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Warning: Failed to load x64 environment, trying x86...
+    call %VS_PATH% x86 >nul 2>&1
+)
+
+REM Check if cl.exe is now available
+where cl >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Error: cl.exe still not found after loading VS environment.
+    echo.
+    echo You can also manually run:
+    echo   "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
+    echo.
+    pause
+    exit /b 1
+)
+
+echo Environment loaded successfully.
 echo.
 
 REM Create build directory
 if not exist build mkdir build
 
 echo Compiling...
-cl /std:c++17 /O2 /Wall /Iinclude ^
+cl /std:c++17 /O2 /Iinclude ^
    /Fe:gte-runner.exe ^
    src\main.cpp ^
    src\json_parser.cpp ^

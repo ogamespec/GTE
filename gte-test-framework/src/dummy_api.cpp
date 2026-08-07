@@ -42,10 +42,10 @@ void DummyGTEAPI::unregister_command(const std::string& opcode) {
     commands_.erase(opcode);
 }
 
-std::vector<std::string> DummyGTEAPI::get_supported_commands() {
+std::vector<std::string> DummyGTEAPI::get_supported_commands() const {
     std::vector<std::string> cmds;
-    for (const auto& pair : commands_) {
-        cmds.push_back(pair.first);
+    for (const auto& kv : commands_) {
+        cmds.push_back(kv.first);
     }
     return cmds;
 }

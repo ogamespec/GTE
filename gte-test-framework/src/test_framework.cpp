@@ -27,11 +27,20 @@ TestFile TestFramework::load_test_file(const std::string& filepath) {
     std::string json = buffer.str();
     file.close();
 
-    JsonArray test_cases = JsonParser::parse_array(json);
+    JsonPtr test_cases_ptr = JsonParser::parse_array(json);
+    if (!test_cases_ptr || test_cases_ptr->type != JsonValue::ARRAY) {
+        std::cerr << "Error: Expected JSON array in " << filepath << "\n";
+        return test_file;
+    }
+
+    const JsonArray& test_cases = test_cases_ptr->arr_val;
 
     for (const auto& tc_val : test_cases) {
         TestCase tc;
         auto obj = get_object(tc_val);
+        if (obj.empty()) {
+            continue;
+        }
 
         tc.name = get_string(get_field(obj, "name"), "unnamed");
         tc.command = get_string(get_field(obj, "command"), "00");
@@ -41,31 +50,31 @@ TestFile TestFramework::load_test_file(const std::string& filepath) {
         tc.cv = get_int_field(obj, "cv", 0);
         tc.lm = get_int_field(obj, "lm", 0);
 
-        auto initial_obj = get_object(get_field(obj, "initial"));
-        auto final_obj = get_object(get_field(obj, "final"));
+        auto initial_ptr = get_field(obj, "initial");
+        auto final_ptr = get_field(obj, "final");
+        auto initial_obj = get_object(initial_ptr);
+        auto final_obj = get_object(final_ptr);
 
-        // Parse data registers (d0-d31)
         for (int i = 0; i <= 31; ++i) {
             std::string key = "d" + std::to_string(i);
             auto it = initial_obj.find(key);
-            if (it != initial_obj.end()) {
+            if (it != initial_obj.end() && it->second) {
                 tc.initial.set_data(i, static_cast<int32_t>(get_int(it->second)));
             }
             it = final_obj.find(key);
-            if (it != final_obj.end()) {
+            if (it != final_obj.end() && it->second) {
                 tc.final_state.set_data(i, static_cast<int32_t>(get_int(it->second)));
             }
         }
 
-        // Parse control registers (c0-c31)
         for (int i = 0; i <= 31; ++i) {
             std::string key = "c" + std::to_string(i);
             auto it = initial_obj.find(key);
-            if (it != initial_obj.end()) {
+            if (it != initial_obj.end() && it->second) {
                 tc.initial.set_control(i, static_cast<int32_t>(get_int(it->second)));
             }
             it = final_obj.find(key);
-            if (it != final_obj.end()) {
+            if (it != final_obj.end() && it->second) {
                 tc.final_state.set_control(i, static_cast<int32_t>(get_int(it->second)));
             }
         }
@@ -84,10 +93,8 @@ TestResult TestFramework::run_test(const TestCase& test, DummyGTEAPI& api) {
 
     RegisterState state = test.initial;
 
-    // Execute command via Dummy GTE API
     api.execute_command(test.command, state, test.sf, test.mx, test.v, test.cv, test.lm);
 
-    // Compare actual state with expected final state
     result.passed = compare_registers(state, test.final_state, result.mismatches);
 
     if (!result.passed) {
@@ -101,12 +108,9 @@ bool TestFramework::compare_registers(const RegisterState& actual, const Registe
                                        std::map<std::string, std::pair<int32_t, int32_t>>& mismatches) {
     bool all_match = true;
 
-    // Check data registers
     for (int i = 0; i <= 31; ++i) {
         int32_t exp_val = expected.get_data(i);
         int32_t act_val = actual.get_data(i);
-        // Only check registers that have non-zero expected values or were explicitly set
-        // We consider a register "expected" if the expected value is non-zero
         if (exp_val != 0 && exp_val != act_val) {
             std::string key = "d" + std::to_string(i);
             mismatches[key] = {act_val, exp_val};
@@ -114,7 +118,6 @@ bool TestFramework::compare_registers(const RegisterState& actual, const Registe
         }
     }
 
-    // Check control registers
     for (int i = 0; i <= 31; ++i) {
         int32_t exp_val = expected.get_control(i);
         int32_t act_val = actual.get_control(i);
@@ -186,9 +189,9 @@ void TestFramework::print_detailed_report() const {
         std::cout << "  " << status << " " << result.test_name << " (cmd: 0x" << result.command << ")\n";
 
         if (!result.passed && !result.mismatches.empty()) {
-            for (const auto& [reg, values] : result.mismatches) {
-                std::cout << "         " << reg << ": expected 0x" << std::hex << std::setw(8) << std::setfill('0')
-                          << values.second << " got 0x" << values.first << "\n";
+            for (const auto& kv : result.mismatches) {
+                std::cout << "         " << kv.first << ": expected 0x" << std::hex << std::setw(8) << std::setfill('0')
+                          << kv.second.second << " got 0x" << kv.second.first << "\n";
                 std::cout << std::dec;
             }
         }
