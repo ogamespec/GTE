@@ -6,4 +6,6 @@
 // Mock R3000A - minimal definitions needed by gte.c
 // In real pcsx this contains the R3000A CPU state
 
+#define S64(x) ((s64)(x))
+
 #endif

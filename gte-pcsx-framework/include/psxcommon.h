@@ -104,9 +104,7 @@ typedef struct {
     CP2DReg CP2D;
     CP2CReg CP2C;
     GPRReg  GPR;
-    struct {
-        u32 code;
-    } temp;
+    u32 code;
 } PSXRegsGlobal;
 
 extern PSXRegsGlobal psxRegs_global;
