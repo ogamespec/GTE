@@ -21,24 +21,51 @@ if (Test-Path $vsWhere) {
     }
 }
 
-# Compile with MSVC
+# Compile gte.c as C code
+$GteObj = Join-Path $OutputDir "gte.obj"
+Write-Host "Compiling gte.c (C)..."
+& cmd /c "call `"$vcvarsall`" x64 && cl /TC /O2 /I`"$IncludeDir`" -Fo:`"$GteObj`" `"$SrcDir\gte.c`""
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "gte.c compilation failed!"
+    exit 1
+}
+
+# Compile C++ files
 $Sources = @(
     (Join-Path $SrcDir "main.cpp"),
     (Join-Path $SrcDir "pcsx_gte_stub.cpp"),
     (Join-Path $SrcDir "pcsx_gte_cpu_state.cpp"),
-    (Join-Path $SrcDir "gte.c")
+    (Join-Path $SrcDir "json_parser.cpp"),
+    (Join-Path $SrcDir "gte_model.cpp"),
+    (Join-Path $SrcDir "test_framework.cpp"),
+    (Join-Path $SrcDir "gte_stub.cpp")
 )
 
-$OutputExe = Join-Path $OutputDir "gte-pcsx-runner.exe"
+$Objects = @()
+foreach ($src in $Sources) {
+    $obj = Join-Path $OutputDir (Split-Path $src -Leaf).Replace(".cpp", ".obj")
+    $Objects += $obj
+    Write-Host "Compiling $(Split-Path $src -Leaf)..."
+    & cmd /c "call `"$vcvarsall`" x64 && cl /std:c++17 /O2 /EHsc /I`"$IncludeDir`" -Fo:`"$obj`" -c `"$src`""
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Compilation failed for $(Split-Path $src -Leaf)!"
+        exit 1
+    }
+}
 
-Write-Host "Compiling with MSVC..."
-cl /std:c++17 /O2 /I"$IncludeDir" /EHsc /Fe:"$OutputExe" @Sources
+# Link
+$OutputExe = Join-Path $OutputDir "gte-pcsx-runner.exe"
+$GlobalObj = Join-Path $OutputDir "pcsx_globals.obj"
+
+Write-Host "Linking..."
+& cmd /c "call `"$vcvarsall`" x64 && link /OUT:`"$OutputExe`" $($Objects -join ' ') $GlobalObj $GteObj"
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "`nBuild successful: $OutputExe"
     Write-Host "Running tests..."
     & $OutputExe
 } else {
-    Write-Host "Build failed!"
+    Write-Host "Linking failed!"
     exit 1
 }

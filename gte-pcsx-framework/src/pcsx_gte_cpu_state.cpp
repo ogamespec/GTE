@@ -1,5 +1,11 @@
 #include "pcsx_gte_cpu_state.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "psxcommon.h"
+#ifdef __cplusplus
+}
+#endif
 
 namespace gte {
 

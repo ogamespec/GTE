@@ -1,39 +1,38 @@
+#if defined(_WIN32)
+#include <windows.h>
+#endif
+
 #include "pcsx_gte_stub.h"
 #include "pcsx_gte_cpu_state.h"
 #include "test_framework.h"
 #include "json_parser.h"
 #include "gte_model.h"
+#include "psxcommon.h"
+#include "gte.h"
 #include <iostream>
 #include <string>
 #include <vector>
-#include <dirent.h>
 #include <cstring>
 
-// Global state for gte.c
-CP2DReg g_CP2D;
-CP2CReg g_CP2C;
-GPRReg  g_GPR;
-ConfigType g_Config;
-u32 g_psxRegs_code;
-PSXRec g_psxRec;
-PSXRegsGlobal psxRegs_global;
-GPUAddVertexFunc GPU_addVertex;
-int Widescreen = 0;
+#if defined(_WIN32)
+#undef R
+#undef G
+#undef B
+#undef CODE
+#undef CP2D
+#undef CP2C
+#define WIN32_FIND
+#else
+#include <dirent.h>
+#endif
+
+// Global state defined in pcsx_globals.c
 
 static void dummy_gpu_vertex(s32 sx, s32 sy, s32 ix, s32 iy, s32 iz) {
     (void)sx; (void)sy; (void)ix; (void)iy; (void)iz;
 }
 
 namespace gte {
-
-struct TestResult {
-    std::string test_name;
-    int32_t command;
-    std::string filename;
-    bool passed;
-    std::string failure_reason;
-    std::map<std::string, std::pair<int32_t, int32_t>> mismatches;
-};
 
 static std::string format_hex(int32_t value) {
     char buf[16];
@@ -49,7 +48,6 @@ static int run_single_test(const TestCase& test, PCSXGTECPUState& cpu_state) {
     psxRegs_global.code = opcode;
 
     GTEFields fields = GTEFields::from_opcode(opcode);
-    void (*gte_func)() = nullptr;
 
     switch (fields.command) {
         case 0x01: gteRTPS(); break;
@@ -112,6 +110,20 @@ static int run_single_test(const TestCase& test, PCSXGTECPUState& cpu_state) {
 
 static std::vector<std::string> list_json_files(const std::string& dir) {
     std::vector<std::string> files;
+
+#if defined(_WIN32)
+    std::string pattern = dir + "/*.json";
+    WIN32_FIND_DATAA fd;
+    HANDLE h = FindFirstFileA(pattern.c_str(), &fd);
+    if (h == INVALID_HANDLE_VALUE) {
+        std::cerr << "Error: Cannot open directory: " << dir << "\n";
+        return files;
+    }
+    do {
+        files.push_back(dir + "/" + std::string(fd.cFileName));
+    } while (FindNextFileA(h, &fd) != 0);
+    FindClose(h);
+#else
     DIR* d = opendir(dir.c_str());
     if (!d) {
         std::cerr << "Error: Cannot open directory: " << dir << "\n";
@@ -126,6 +138,8 @@ static std::vector<std::string> list_json_files(const std::string& dir) {
         }
     }
     closedir(d);
+#endif
+
     return files;
 }
 

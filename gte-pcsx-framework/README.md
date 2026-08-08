@@ -17,12 +17,13 @@ This framework integrates the original PCSX GTE emulator code (`gte.c`) with the
 gte-pcsx-framework/
 ├── Makefile              - Unix/Linux build script
 ├── build.bat             - Windows MSVC build script
+├── build.ps1             - Windows PowerShell build script
 ├── README.md             - This file
 ├── include/              - Public headers
 │   ├── pcsx_types.h      - Basic type definitions (u8, s32, u32, etc.)
-│   ├── psxcommon.h       - GTE register types and macro accessors
-│   ├── psxmem.h          - Memory access mocks
-│   ├── r3000a.h          - R3000A CPU mock header
+│   ├── psxcommon.h       - GTE register types, macros, and global declarations
+│   ├── psxmem.h          - Memory access mocks (psxMemRead32/psxMemWrite32)
+│   ├── r3000a.h          - R3000A CPU mock header (S64 macro)
 │   ├── gte_stub.h        - Base GTEStub interface (from gte-test-framework)
 │   ├── gte_model.h       - GTE register state model (from gte-test-framework)
 │   ├── json_parser.h     - JSON parser (from gte-test-framework)
@@ -34,8 +35,12 @@ gte-pcsx-framework/
 │   ├── gte.h             - Original PCSX GTE header (unchanged)
 │   ├── pcsx_gte_stub.cpp - PCSX command registration
 │   ├── pcsx_gte_cpu_state.cpp - CPUState/RegisterState bridge
+│   ├── pcsx_globals.c    - Global variable definitions for C/C++ linkage
+│   ├── json_parser.cpp   - JSON parser implementation
+│   ├── gte_model.cpp     - Register state model implementation
+│   ├── test_framework.cpp - Test framework implementation
+│   ├── gte_stub.cpp      - GTEStub implementation + dummy commands
 │   └── main.cpp          - Entry point and test runner
-└── pcsx-mocks/           - Additional mock files (if needed)
 ```
 
 ## Building
@@ -57,6 +62,13 @@ make
 ```powershell
 cd gte-pcsx-framework
 .\build.bat
+```
+
+Or with PowerShell:
+
+```powershell
+cd gte-pcsx-framework
+.\build.ps1
 ```
 
 ## Usage
@@ -87,6 +99,7 @@ The framework bridges the PCSX GTE implementation with the test framework:
 - **PCSXGTEStub**: Registers all 22 PCSX GTE commands as GTEStub handlers
 - **PCSXGTECPUState**: Wraps `RegisterState` and provides sync methods to/from `psxRegs_global`
 - **gte.c**: Original PCSX GTE implementation, kept unchanged as specified
+- **pcsx_globals.c**: Provides C-linkage definitions for global variables used by both C and C++ code
 
 ### Integration with gte-test-framework
 
@@ -124,6 +137,10 @@ Test files are located in the `v1/` directory (parent directory). They cover all
 | gpf.json | GPF | General Purpose Filter |
 | gpl.json | GPL | General Purpose Lift |
 | ncct.json | NCCT | Normal Color Color Triple |
+
+## Build Output
+
+The build produces `gte-pcsx-runner.exe` (Windows) or `gte-pcsx-runner` (Unix) in the `bin/` directory.
 
 ## License
 
