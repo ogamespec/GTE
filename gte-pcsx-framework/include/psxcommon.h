@@ -19,10 +19,10 @@ typedef struct {
             s32 h;
         } w;
         struct {
-            s32 l;
-            s32 h;
-            s32 h2;
-            s32 h3;
+            u8 l;
+            u8 h;
+            u8 h2;
+            u8 h3;
         } b;
         s32 d;
     };
@@ -40,10 +40,10 @@ typedef struct {
             s32 h;
         } w;
         struct {
-            s32 l;
-            s32 h;
-            s32 h2;
-            s32 h3;
+            u8 l;
+            u8 h;
+            u8 h2;
+            u8 h3;
         } b;
         s64 sd;
     };
