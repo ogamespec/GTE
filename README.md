@@ -10,12 +10,14 @@ These GTE tests focus on register state before and after executing GTE commands,
 
 ## Test Format
 
-Each `.json` file contains an array of test cases. Each test case follows this structure:
+Each `.json` file representing single opcode test and contains an array of test cases. Each test case follows this structure:
 
 ```json
 {
     "name": "test description",
     "command": 1,
+    "fakeop": 1,
+    // Additional optional opcode fields: sf, mx, v, cv, lm
     "initial": {
         "d0": 0,
         "d1": 0,
@@ -39,6 +41,16 @@ Each `.json` file contains an array of test cases. Each test case follows this s
 }
 ```
 
+### GTE Instruction Decoding
+
+```
+ -----------------------------------------------------------------------------------------------
+|31|30|29|28|27|26|25|24|23|22|21|20|19|18|17|16|15|14|13|12|11|10|09|08|07|06|05|04|03|02|01|00|
+|-----------------------------------------------------------------------------------------------|
+| 0  1  0  0  1  0| 1|   Fake OP    |SF| MX  |  V  | CV  | 0  0|LM| 0  0  0  0|     Command     |
+ -----------------------------------------------------------------------------------------------
+```
+
 ### Register naming convention
 
 | Register | GTE Register | Description |
@@ -53,17 +65,18 @@ Each `.json` file contains an array of test cases. Each test case follows this s
 | `d12-d15` | SXY0-SXY2, SXYP | Screen XY-coordinate FIFO |
 | `d16-d19` | SZ0-SZ3 | Screen Z-coordinate FIFO |
 | `d20-d22` | RGB0-RGB2 | Color CRGB-code/color FIFO |
+| `d23` | RES1 | Reserved (do not use) |
 | `d24` | MAC0 | 32-bit Maths Accumulator |
 | `d25-d27` | MAC1-MAC3 | 32-bit Maths Accumulators (Vector) |
 | `d28` | IRGB | Convert RGB Color Input |
 | `d29` | ORGB | Convert RGB Color Output |
 | `d30` | LZCS | Count Leading-Zeroes Source |
 | `d31` | LZCR | Count Leading-Zeroes Result |
-| `c0-c8` | RT11-RT33 | Rotation matrix |
-| `c9-c11` | TRX, TRY, TRZ | Translation vector |
-| `c12-c14` | L11-L33 | Light matrix |
-| `c15-c17` | RBK, GBK, BBK | Background color |
-| `c18-c20` | LR1-LB3 | Light color matrix |
+| `c0-c4` | RT11-RT33 | Rotation matrix |
+| `c5-c7` | TRX, TRY, TRZ | Translation vector |
+| `c8-c12` | L11-L33 | Light matrix |
+| `c13-c15` | RBK, GBK, BBK | Background color |
+| `c16-c20` | LR1-LB3 | Light color matrix |
 | `c21-c23` | RFC, GFC, BFC | Far color |
 | `c24-c25` | OFX, OFY | Screen offset |
 | `c26` | H | Projection plane distance |
@@ -107,11 +120,11 @@ Each test case can include optional parameters to control test behavior. The def
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `sf` | 0 or 1 | Shift flag. When `sf=1`, the result is shifted right by 12 bits (12-bit fraction shift). Default: `0` |
-| `mx` | 0 or 1 | Matrix select. Selects which rotation matrix to use (RT11-RT33 or L11-L33). Default: `0` |
-| `v` | 0 or 1 | Vector select. Selects which input vector to use (VXY0/VZ0, VXY1/VZ1, or VXY2/VZ2). Default: `0` |
-| `cv` | 0 or 1 | Color select. Selects which color source to use (LR1-LB3 or RBK/GBK/BBK). Default: `0` |
-| `lm` | 0 or 1 | Light mode. When `lm=0`, uses signed saturation (0x8000/0x7FFF). When `lm=1`, uses unsigned saturation (0x0000/0xFFFF). Default: `0` |
+| `sf` | 0 or 1 | Shift Fraction in IR registers (0=No fraction, 1=12bit fraction) |
+| `mx` | 0-3 | MVMVA Multiply Matrix    (0=Rotation. 1=Light, 2=Color, 3=Reserved) |
+| `v` | 0-3 | MVMVA Multiply Vector    (0=V0, 1=V1, 2=V2, 3=IR/long) |
+| `cv` | 0-3 | MVMVA Translation Vector (0=TR, 1=BK, 2=FC/Bugged, 3=None) |
+| `lm` | 0 or 1 | Saturate IR1,IR2,IR3 result (0=To -8000h..+7FFFh, 1=To 0..+7FFFh) |
 
 Example:
 
@@ -119,6 +132,7 @@ Example:
 {
     "name": "test with sf=1",
     "command": 1,
+    "fakeop": 1,
     "sf": 1,
     "initial": { ... },
     "final": { ... }
