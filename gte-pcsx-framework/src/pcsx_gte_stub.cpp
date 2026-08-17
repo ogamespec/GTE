@@ -38,7 +38,7 @@ void PCSXGTEStub::register_pcsx_commands() {
         (void)opcode; (void)cpu;
         gteRTPS();
     });
-    register_command(0x02, [](uint32_t opcode, void* cpu) {
+    register_command(0x30, [](uint32_t opcode, void* cpu) {
         (void)opcode; (void)cpu;
         gteRTPT();
     });
@@ -50,7 +50,7 @@ void PCSXGTEStub::register_pcsx_commands() {
         (void)opcode; (void)cpu;
         gteOP();
     });
-    register_command(0x0E, [](uint32_t opcode, void* cpu) {
+    register_command(0x13, [](uint32_t opcode, void* cpu) {
         (void)opcode; (void)cpu;
         gteNCDS();
     });

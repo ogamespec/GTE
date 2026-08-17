@@ -1,7 +1,7 @@
 [
   {
     "name": "NCDS - all zeros",
-    "command": 14,
+    "command": 19,
     "fakeop": 14,
     "sf": 0,
     "mx": 0,
@@ -35,7 +35,7 @@
   },
   {
     "name": "NCDS - with far color interpolation",
-    "command": 14,
+    "command": 19,
     "fakeop": 14,
     "sf": 0,
     "mx": 0,
@@ -69,7 +69,7 @@
   },
   {
     "name": "NCDS - (no far color contribution)",
-    "command": 14,
+    "command": 19,
     "fakeop": 14,
     "sf": 0,
     "mx": 0,
@@ -103,7 +103,7 @@
   },
   {
     "name": "NCDS - IR0=max (full far color)",
-    "command": 14,
+    "command": 19,
     "fakeop": 14,
     "sf": 0,
     "mx": 0,
@@ -137,7 +137,7 @@
   },
   {
     "name": "NCDS - saturation lm=1 (IR1,IR2 to 0..7FFF)",
-    "command": 14,
+    "command": 19,
     "fakeop": 14,
     "sf": 0,
     "mx": 0,

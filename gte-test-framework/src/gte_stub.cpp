@@ -161,10 +161,10 @@ void cmd_cc_stub(uint32_t opcode, CPUState& cpu) {
 // Register all GTE commands with dummy implementations
 void register_dummy_commands(GTEStub& stub) {
     stub.register_command(0x01, cmd_rtps_stub);
-    stub.register_command(0x02, cmd_rtpt_stub);
+    stub.register_command(0x30, cmd_rtpt_stub);
     stub.register_command(0x06, cmd_nclip_stub);
     stub.register_command(0x0C, cmd_op_stub);
-    stub.register_command(0x0E, cmd_ncds_stub);
+    stub.register_command(0x13, cmd_ncds_stub);
     stub.register_command(0x10, cmd_dpcs_stub);
     stub.register_command(0x11, cmd_intpl_stub);
     stub.register_command(0x12, cmd_mvmva_stub);

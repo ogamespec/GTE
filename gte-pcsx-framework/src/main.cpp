@@ -51,10 +51,10 @@ static int run_single_test(const TestCase& test, PCSXGTECPUState& cpu_state) {
 
     switch (fields.command) {
         case 0x01: gteRTPS(); break;
-        case 0x02: gteRTPT(); break;
+        case 0x30: gteRTPT(); break;
         case 0x06: gteNCLIP(); break;
         case 0x0C: gteOP(); break;
-        case 0x0E: gteNCDS(); break;
+        case 0x13: gteNCDS(); break;
         case 0x10: gteDPCS(); break;
         case 0x11: gteINTPL(); break;
         case 0x12: gteMVMVA(); break;
@@ -86,7 +86,7 @@ static int run_single_test(const TestCase& test, PCSXGTECPUState& cpu_state) {
         for (int i = 0; i < 32; i++) {
             if (test.final_state.data[i] != 0 && actual.data[i] != test.final_state.data[i]) {
                 char buf[256];
-                snprintf(buf, sizeof(buf), "d%d: expected %s got %s", i + 1,
+                snprintf(buf, sizeof(buf), "d%d: expected %s got %s", i,
                          format_hex(test.final_state.data[i]).c_str(),
                          format_hex(actual.data[i]).c_str());
                 std::cerr << "  " << buf << "\n";
@@ -95,7 +95,7 @@ static int run_single_test(const TestCase& test, PCSXGTECPUState& cpu_state) {
         for (int i = 0; i < 32; i++) {
             if (test.final_state.control[i] != 0 && actual.control[i] != test.final_state.control[i]) {
                 char buf[256];
-                snprintf(buf, sizeof(buf), "c%d: expected %s got %s", i + 1,
+                snprintf(buf, sizeof(buf), "c%d: expected %s got %s", i,
                          format_hex(test.final_state.control[i]).c_str(),
                          format_hex(actual.control[i]).c_str());
                 std::cerr << "  " << buf << "\n";
@@ -190,21 +190,21 @@ static int run_all_tests(const std::string& test_dir) {
 
             for (int i = 0; i < 32; i++) {
                 char key[8];
-                snprintf(key, sizeof(key), "d%d", i + 1);
+                snprintf(key, sizeof(key), "d%d", i);
                 JsonPtr val = get_field(init_obj, key);
                 if (val) tc.initial.data[i] = (int32_t)get_int(val);
 
-                snprintf(key, sizeof(key), "c%d", i + 1);
+                snprintf(key, sizeof(key), "c%d", i);
                 val = get_field(init_obj, key);
                 if (val) tc.initial.control[i] = (int32_t)get_int(val);
             }
             for (int i = 0; i < 32; i++) {
                 char key[8];
-                snprintf(key, sizeof(key), "d%d", i + 1);
+                snprintf(key, sizeof(key), "d%d", i);
                 JsonPtr val = get_field(final_obj, key);
                 if (val) tc.final_state.data[i] = (int32_t)get_int(val);
 
-                snprintf(key, sizeof(key), "c%d", i + 1);
+                snprintf(key, sizeof(key), "c%d", i);
                 val = get_field(final_obj, key);
                 if (val) tc.final_state.control[i] = (int32_t)get_int(val);
             }
